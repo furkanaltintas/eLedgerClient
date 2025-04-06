@@ -1,0 +1,52 @@
+html, body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sayfayı ortalamak için Flexbox kullanıyoruz */
+.centered-body {
+  display: flex;
+  justify-content: center; /* Yatayda ortalama */
+  align-items: center; /* Dikeyde ortalama */
+  min-height: 100vh; /* Sayfa yüksekliği ekran yüksekliği kadar */
+  margin: 0; /* Margin sıfırlanacak */
+}
+
+/* İçeriğin ortalanması için */
+.container {
+  width: 80%; /* İçeriğin genişliği */
+  max-width: 1200px; /* Maksimum genişlik */
+  padding: 20px; /* Padding kullanılabilir */
+}
+
+/* Diğer stil düzenlemeleri */
+.company-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Avatar'lar alt alta geçmesin diye */
+  gap: 20px; /* Avatarlar arasındaki mesafe */
+}
+
+.company-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap; /* Eğer taşarsa alta geçsin */
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* geçişi yumuşatır */
+}
+
+.avatar:hover {
+  transform: scale(1.2);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}

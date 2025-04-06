@@ -10,7 +10,7 @@
 
 <ng-template #recursiveMenu let-menu>
   <li>
-    <a routerLink="{{menu.url}}">
+    <a routerLink="{{menu.url}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
       {{ menu.title }}
       <i *ngIf="menu.subMenus?.length > 0" class="material-icons has-sub-menu">keyboard_arrow_down</i>
     </a>

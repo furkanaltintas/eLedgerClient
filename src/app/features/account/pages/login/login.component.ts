@@ -22,7 +22,7 @@ export class LoginComponent {
     debugger;
     if(form.valid) {
       this.http.login(this.model, () => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/choose-company']);
       }, () => {
         this.router.navigate(['/login']);
       });

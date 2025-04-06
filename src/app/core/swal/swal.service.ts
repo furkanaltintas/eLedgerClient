@@ -21,13 +21,13 @@ export class SwalService {
     });
   }
 
-  deleteToast(title:string, text: string, callBack: () => void) {
+  deleteToast(title:string, text: string, callBack: () => void, confirmButtonText: string = "Delete") {
     Swal.fire({
       title: title,
       text: text,
       icon: "question",
       showConfirmButton: true,
-      confirmButtonText : "Delete",
+      confirmButtonText : confirmButtonText,
       showCancelButton: true,
       cancelButtonText: "Cancel"
     }).then(res => {

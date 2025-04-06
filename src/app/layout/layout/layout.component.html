@@ -5,22 +5,14 @@
 <div class="app-content">
   <div class="content-wrapper">
     <div class="container">
-      <div class="row">
-          <div class="col">
-              <div class="page-description">
-                  <h1>Admin Dashboard</h1>
-                  <span>Welcome to the admin panel. Here you can manage your content.</span>
-              </div>
-          </div>
-      </div>
+      <app-page-description
+      [pageTitle]="pageTitle"
+      [pageDescription]="pageDescription"
+      ></app-page-description>
       <div class="row">
           <div class="col">
             <div class="card">
-              <div class="card-header">
-                  <h5 class="card-title">Admin</h5>
-              </div>
               <div class="card-body">
-                  <p class="card-description">Section header with actions on the right.</p>
                   <div class="example-container">
                       <div class="example-content bg-light">
                           <router-outlet></router-outlet>

@@ -1,20 +1,16 @@
-<div class="section-description d-flex align-items-center">
-  <div class="section-description-content flex-grow-1">
-      <h1>Dashboard</h1>
-  </div>
-  <div class="section-description-actions">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="material-icons">add</i>Create</button>
-  </div>
-</div>
+<app-section-description title="Users"></app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
 
 <table class="table">
   <thead class="table-dark">
       <tr>
-          <th scope="col">#</th>
-          <th scope="col">Ad Soyad</th>
-          <th scope="col">Kullanıcı Adı</th>
-          <th scope="col">Mail Adresi</th>
-          <th scope="col">İşlemler</th>
+          <th>#</th>
+          <th>FullName</th>
+          <th>UserName</th>
+          <th>Email</th>
+          <td>Company</td>
+          <th>Transactions</th>
       </tr>
   </thead>
   <tbody>
@@ -24,6 +20,7 @@
           <th>{{user.fullName}}</th>
           <th>{{user.userName}}</th>
           <th>{{user.email}}</th>
+          <th (click)="showServers(user.companyUsers)">Servers</th>
           <th>
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(user)">Update</button>
             <button (click)="delete(user)" class="btn btn-danger btn-sm">Delete</button>
@@ -40,7 +37,7 @@
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Kullanıcı Ekleme Formu</h5>
+        <h5 class="modal-title" id="createModalLabel">User Create Form</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -72,6 +69,14 @@
           <input [(ngModel)]="createModel.password" type="password" class="form-control" name="password" required minlength="3">
           <div class="invalid-feedback"></div>
         </div>
+        <div class="form-group">
+          <label>Companies</label>
+          <select [(ngModel)]="createModel.companyIds" name="companyIds" class="form-control" multiple required>
+            @for (company of companies; track company) {
+              <option [value]="company.id">{{company.name}}</option>
+            }
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-dark w-100">Kaydet</button>
@@ -86,7 +91,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">Kullanıcı Ekleme Formu</h5>
+        <h5 class="modal-title" id="updateModalLabel">User Update Form</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -115,8 +120,16 @@
         </div>
         <div class="form-group">
           <label>Şifre</label>
-          <input [(ngModel)]="updateModel.password" type="password" class="form-control" name="password" required minlength="3">
+          <input [(ngModel)]="updateModel.password" type="password" class="form-control" name="password">
           <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Companies</label>
+          <select [(ngModel)]="updateModel.companyIds" name="companyIds" class="form-control" multiple required>
+            @for (company of companies; track company) {
+              <option [value]="company.id">{{company.name}}</option>
+            }
+          </select>
         </div>
       </div>
       <div class="modal-footer">

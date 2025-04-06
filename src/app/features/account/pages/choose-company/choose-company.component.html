@@ -1,0 +1,14 @@
+<body class="centered-body">
+  <div class="container">
+    <h3 class="text-center mb-4">Şirket Seçiniz</h3>
+    <div class="company-wrapper">
+      @for (company of companies; track company) {
+        <div class="company-container">
+          <div (click)="userCompany(company.id)" class="avatar">
+            {{ company.name }}
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</body>

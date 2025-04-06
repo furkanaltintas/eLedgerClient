@@ -1,0 +1,199 @@
+<app-section-description title="Companies">
+  <div class="section-description-actions">
+    <button class="btn btn-primary" (click)="migrateAll()"><i class="material-icons">add</i>Tüm Databaseleri Güncelle</button>
+  </div>
+</app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Full Address</th>
+          <th>Tax Department</th>
+          <th>Tax Number</th>
+          <th>Server</th>
+          <th>Database Name</th>
+          <th>Transactions</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (company of companies | company:search; track company) {
+        <tr>
+          <th>{{$index+1}}</th>
+          <th>{{company.name}}</th>
+          <th>{{company.fullAddress}}</th>
+          <th>{{company.taxDepartment}}</th>
+          <th>{{company.taxNumber}}</th>
+          <th>{{company.database.server}}</th>
+          <th>{{company.database.databaseName}}</th>
+          <th>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(company)">Update</button>
+            <button (click)="delete(company)" class="btn btn-danger btn-sm">Delete</button>
+          </th>
+      </tr>
+      }
+  </tbody>
+</table>
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Company Create Form</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name</label>
+          <input [(ngModel)]="createModel.name" type="text" class="form-control" name="name" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Full Address</label>
+          <input [(ngModel)]="createModel.fullAddress" type="text" class="form-control" name="fullAddress" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Tax Department</label>
+              <input [(ngModel)]="createModel.taxDepartment" type="text" class="form-control" name="taxDepartment" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Tax Number</label>
+              <input [(ngModel)]="createModel.taxNumber" type="email" class="form-control" name="taxNumber" required minlength="10" maxlength="11">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Server</label>
+              <input [(ngModel)]="createModel.database.server" type="text" class="form-control" name="server" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Database Name</label>
+              <input [(ngModel)]="createModel.database.databaseName" type="email" class="form-control" name="databaseName" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>User Id</label>
+              <input [(ngModel)]="createModel.database.userId" type="text" class="form-control" name="userId">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Password</label>
+              <input [(ngModel)]="createModel.database.password" type="password" class="form-control" name="password">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Company Update Form</h5>
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name</label>
+          <input [(ngModel)]="updateModel.name" type="text" class="form-control" name="name" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Full Address</label>
+          <input [(ngModel)]="updateModel.fullAddress" type="text" class="form-control" name="fullAddress" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Tax Department</label>
+              <input [(ngModel)]="updateModel.taxDepartment" type="text" class="form-control" name="taxDepartment" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Tax Number</label>
+              <input [(ngModel)]="updateModel.taxNumber" type="email" class="form-control" name="taxNumber" required minlength="10" maxlength="11">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Server</label>
+              <input [(ngModel)]="updateModel.database.server" type="text" class="form-control" name="server" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Database Name</label>
+              <input [(ngModel)]="updateModel.database.databaseName" type="email" class="form-control" name="databaseName" required>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>User Id</label>
+              <input [(ngModel)]="updateModel.database.userId" type="text" class="form-control" name="userId">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Password</label>
+              <input [(ngModel)]="updateModel.database.password" type="password" class="form-control" name="password">
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

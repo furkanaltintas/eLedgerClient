@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { SectionDescriptionComponent } from "../../../../layout/section-description/section-description.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [SectionDescriptionComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
