@@ -1,0 +1,24 @@
+<div class="app-menu">
+  <div class="container">
+    <ul class="menu-list">
+      <ng-container *ngFor="let menu of menus">
+        <ng-template [ngTemplateOutlet]="recursiveMenu" [ngTemplateOutletContext]="{ $implicit: menu }"></ng-template>
+      </ng-container>
+    </ul>
+  </div>
+</div>
+
+<ng-template #recursiveMenu let-menu>
+  <li>
+    <a routerLink="{{menu.url}}">
+      {{ menu.title }}
+      <i *ngIf="menu.subMenus?.length > 0" class="material-icons has-sub-menu">keyboard_arrow_down</i>
+    </a>
+
+    <ul class="sub-menu" *ngIf="menu.subMenus?.length > 0">
+      <ng-container *ngFor="let sub of menu.subMenus">
+        <ng-template [ngTemplateOutlet]="recursiveMenu" [ngTemplateOutletContext]="{ $implicit: sub }"></ng-template>
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>

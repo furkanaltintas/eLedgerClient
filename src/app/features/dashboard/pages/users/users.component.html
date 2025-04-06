@@ -1,0 +1,128 @@
+<div class="section-description d-flex align-items-center">
+  <div class="section-description-content flex-grow-1">
+      <h1>Dashboard</h1>
+  </div>
+  <div class="section-description-actions">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="material-icons">add</i>Create</button>
+  </div>
+</div>
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th scope="col">#</th>
+          <th scope="col">Ad Soyad</th>
+          <th scope="col">Kullanıcı Adı</th>
+          <th scope="col">Mail Adresi</th>
+          <th scope="col">İşlemler</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (user of users | user:search; track user) {
+        <tr>
+          <th>{{$index+1}}</th>
+          <th>{{user.fullName}}</th>
+          <th>{{user.userName}}</th>
+          <th>{{user.email}}</th>
+          <th>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(user)">Update</button>
+            <button (click)="delete(user)" class="btn btn-danger btn-sm">Delete</button>
+          </th>
+      </tr>
+      }
+  </tbody>
+</table>
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel"  tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Kullanıcı Ekleme Formu</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Ad</label>
+          <input [(ngModel)]="createModel.firstName" type="text" class="form-control" name="firstName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Soyad</label>
+          <input [(ngModel)]="createModel.lastName" type="text" class="form-control" name="lastName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Kullanıcı Adı</label>
+          <input [(ngModel)]="createModel.userName" type="text" class="form-control" name="userName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Mail Adresi</label>
+          <input [(ngModel)]="createModel.email" type="email" class="form-control" name="email" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Şifre</label>
+          <input [(ngModel)]="createModel.password" type="password" class="form-control" name="password" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Kaydet</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Kullanıcı Ekleme Formu</h5>
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Ad</label>
+          <input [(ngModel)]="updateModel.firstName" type="text" class="form-control" name="firstName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Soyad</label>
+          <input [(ngModel)]="updateModel.lastName" type="text" class="form-control" name="lastName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Kullanıcı Adı</label>
+          <input [(ngModel)]="updateModel.userName" type="text" class="form-control" name="userName" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Mail Adresi</label>
+          <input [(ngModel)]="updateModel.email" type="email" class="form-control" name="email" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Şifre</label>
+          <input [(ngModel)]="updateModel.password" type="password" class="form-control" name="password" required minlength="3">
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Güncelle</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
