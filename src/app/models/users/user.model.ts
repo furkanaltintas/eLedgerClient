@@ -10,6 +10,7 @@ export class UserModel {
   email: string = "";
   password?: string | null = "";
   companyId: string = "";
+  isAdmin: boolean = false;
   companyIds: string[] = [];
   companies: CompanyViewModel[] = [];
   companyUsers: CompanyUserModel[] = [];
