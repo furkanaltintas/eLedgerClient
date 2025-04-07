@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
-import { LoginResponse } from '../../core/auth/auth.model';
+import { AuthService } from '../../core/auth/services/auth.service';
+import { LoginResponse } from '../../core/auth/models/auth.model';
 import { HttpService } from '../../core/api/http.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -40,7 +40,6 @@ export class HeaderComponent {
 
   logout() {
     this.auth.logout();
-    this.router.navigateByUrl("/login");
   }
 
   name() {
