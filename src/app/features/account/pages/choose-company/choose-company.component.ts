@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../core/api/http.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { LoginResponse } from '../../../../core/auth/auth.model';
+import { LoginResponse } from '../../../../core/auth/models/auth.model';
 import { Router } from '@angular/router';
 import { AUTH_LOGIN_BY_COMPANY, COMPANIES_USER_COMPANIES, TOKEN_KEY } from '../../../../constants/url-constants';
 import { SwalService } from '../../../../core/swal/swal.service';
@@ -25,7 +25,8 @@ export class ChooseCompanyComponent {
     private router: Router,
     private swal : SwalService
   ) {
-    this.auth.isAuthenticated();
+    debugger;
+    this.auth.isTokenValid();
     this.userCompanies();
   }
 

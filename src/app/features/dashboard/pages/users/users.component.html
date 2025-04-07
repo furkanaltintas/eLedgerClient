@@ -10,6 +10,7 @@
           <th>UserName</th>
           <th>Email</th>
           <td>Company</td>
+          <td>Is Admin</td>
           <th>Transactions</th>
       </tr>
   </thead>
@@ -21,6 +22,11 @@
           <th>{{user.userName}}</th>
           <th>{{user.email}}</th>
           <th (click)="showServers(user.companyUsers)">Servers</th>
+          <th>
+            <span [ngClass]="user.isAdmin | adminStatusClass">
+              {{ user.isAdmin | adminStatus }}
+            </span>
+          </th>
           <th>
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(user)">Update</button>
             <button (click)="delete(user)" class="btn btn-danger btn-sm">Delete</button>
@@ -77,6 +83,11 @@
             }
           </select>
         </div>
+        <div class="form-check">
+          <input [(ngModel)]="createModel.isAdmin" type="checkbox" class="form-check-input" name="isAdmin">
+          <label class="form-check-label">Are you an admin?</label>
+          <div class="invalid-feedback"></div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-dark w-100">Kaydet</button>
@@ -130,6 +141,11 @@
               <option [value]="company.id">{{company.name}}</option>
             }
           </select>
+        </div>
+        <div class="form-check">
+          <input [(ngModel)]="updateModel.isAdmin" type="checkbox" class="form-check-input" name="isAdmin">
+          <label class="form-check-label">Are you an admin?</label>
+          <div class="invalid-feedback"></div>
         </div>
       </div>
       <div class="modal-footer">

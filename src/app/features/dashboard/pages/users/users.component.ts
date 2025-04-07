@@ -9,11 +9,13 @@ import { CompanyModel } from '../../../../models/companies/company.model';
 import { CompanyUserModel } from '../../../../models/companies/company-user.model';
 import { SectionDescriptionComponent } from "../../../../layout/section-description/section-description.component";
 import { COMPANIES_ENDPOINT, USERS_ENDPOINT } from '../../../../constants/url-constants';
+import { AdminStatusPipe } from '../../../../pipes/admin-status.pipe';
+import { AdminStatusClassPipe } from '../../../../pipes/admin-status-class.pipe';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, UserPipe, SectionDescriptionComponent],
+  imports: [CommonModule, FormsModule, UserPipe,AdminStatusPipe,AdminStatusClassPipe, SectionDescriptionComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })

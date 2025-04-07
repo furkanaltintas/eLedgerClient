@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LoginRequest } from '../../../../core/auth/auth.model';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { LoginRequest } from '../../../../core/auth/models/auth.model';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -19,7 +19,6 @@ export class LoginComponent {
   ) { }
 
   login(form: NgForm) {
-    debugger;
     if(form.valid) {
       this.http.login(this.model, () => {
         this.router.navigate(['/choose-company']);
