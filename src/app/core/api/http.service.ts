@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResultModel } from '../models/result.model';
-import { ErrorService } from '../error/error.service';
+import { ErrorService } from '../error/services/error.service';
 import { API_BASE_URL, TOKEN_KEY } from '../../constants/url-constants';
 import { UNEXPECTED_ERROR } from '../../constants/message-constants';
 
@@ -82,7 +82,6 @@ export class HttpService {
     });
   }
 
-
   get<T>(
     apiUrl: string,
     callBack: (res: ResultModel<T>) => void,
@@ -103,6 +102,7 @@ export class HttpService {
       },
     });
   }
+
 
   handleError(
     err: HttpErrorResponse,
