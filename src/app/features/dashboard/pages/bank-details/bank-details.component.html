@@ -1,0 +1,154 @@
+<app-section-description title="{{bank.name}} Bank Movement"></app-section-description>
+
+<div class="12 mb-3">
+  <div class="row">
+    <div class="col-4">
+      <input [(ngModel)]="startDate" class="form-control" type="date">
+    </div>
+    <div class="col-4">
+      <input [(ngModel)]="endDate" class="form-control" type="date">
+    </div>
+    <div class="col-4">
+      <button (click)="loadBank()" class="btn btn-dark w-100">Getir</button>
+    </div>
+  </div>
+</div>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Inflow</th>
+          <th>Outflow</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (detail of bank.details | bankDetail:search; track detail) {
+        <tr>
+          <th>{{$index+1}}</th>
+          <th>{{detail.date | date: 'dd.MM.yyyy'}}</th>
+          <th>{{detail.description}}</th>
+          <th>{{detail.depositAmount | currency: changeCurrencyNameToSymbol(bank.currencyType.name)}}</th>
+          <th>{{detail.withdrawalAmount | currency: changeCurrencyNameToSymbol(bank.currencyType.name)}}</th>
+          <th>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(detail)">Update</button>
+            <button (click)="delete(detail)" class="btn btn-danger btn-sm">Delete</button>
+          </th>
+      </tr>
+      }
+  </tbody>
+</table>
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Bank Movement Create Form</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Date</label>
+          <input [(ngModel)]="createModel.date" type="date" class="form-control" name="date" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Transaction Type</label>
+          <select [(ngModel)]="createModel.type" class="form-control" name="type" required>
+            <option value="0">Giriş</option>
+            <option value="1">Çıkış</option>
+          </select>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Amount</label>
+          <input [(ngModel)]="createModel.amount" class="form-control" name="amount" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Record Type</label>
+          <select [(ngModel)]="createModel.recordType" class="form-control" name="recordType">
+            <option value="0">Diğer</option>
+            <option value="1">Banka</option>
+          </select>
+          <div class="invalid-feedback"></div>
+        </div>
+        @if(createModel.recordType == 1) {
+          <div class="form-group">
+            <label>Safe</label>
+            <select [(ngModel)]="createModel.oppositeBankId" (change)="setOppositeBank()" class="form-control" name="oppositeCashRegisterId">
+              @for (cash of banks; track cash) {
+                <option [value]="cash.id">{{cash.name}}</option>
+              }
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          @if(createModel.oppositeBank.currencyType.value != bank.currencyType.value) {
+            <div class="form-group">
+              <label>Against Amount</label>
+              <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
+              <div class="invalid-feedback"></div>
+            </div>
+          }
+        }
+        <div class="form-group">
+          <label>Description</label>
+          <input [(ngModel)]="createModel.description" class="form-control" name="description" minlength="3" required>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Bank Update Form</h5>
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Date</label>
+            <input [(ngModel)]="updateModel.date" type="date" class="form-control" name="date" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group">
+            <label>Amount</label>
+            <input [(ngModel)]="updateModel.amount" class="form-control" name="amount" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input [(ngModel)]="updateModel.description" class="form-control" name="description" minlength="3" required>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

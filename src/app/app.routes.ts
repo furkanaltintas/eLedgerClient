@@ -10,6 +10,10 @@ import { companyGuard } from './core/auth/guards/company.guard';
 import { roleGuard } from './core/auth/guards/role.guard';
 import { ForbiddenComponent } from './features/error/pages/forbidden/forbidden.component';
 import { NotFoundComponent } from './features/error/pages/not-found/not-found.component';
+import { CashRegistersComponent } from './features/dashboard/pages/cash-registers/cash-registers.component';
+import { CashRegisterDetailsComponent } from './features/dashboard/pages/cash-register-details/cash-register-details.component';
+import { BanksComponent } from './features/dashboard/pages/banks/banks.component';
+import { BankDetailsComponent } from './features/dashboard/pages/bank-details/bank-details.component';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -21,7 +25,36 @@ export const routes: Routes = [
     children: [
     { path: '', component: DashboardComponent },
     { path: 'users', component: UsersComponent, canActivate: [roleGuard]},
-    { path: 'companies', component: CompaniesComponent, canActivate: [roleGuard]}]
+    { path: 'companies', component: CompaniesComponent, canActivate: [roleGuard]},
+    {
+      path: 'cash-registers',
+      canActivate : [roleGuard],
+      children: [
+        {
+          path: "",
+          component: CashRegistersComponent,
+        },
+        {
+          path: "details/:id",
+          component: CashRegisterDetailsComponent
+        }
+      ]
+    },
+    {
+      path: 'banks',
+      canActivate : [roleGuard],
+      children: [
+        {
+          path: "",
+          component: BanksComponent,
+        },
+        {
+          path: "details/:id",
+          component: BankDetailsComponent
+        }
+      ]
+    },
+  ]
   },
   { path: 'forbidden', component: ForbiddenComponent},
   { path: '**', component: NotFoundComponent }

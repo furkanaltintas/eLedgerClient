@@ -3,20 +3,20 @@
       <div class="container-fluid">
           <div class="navbar-nav" id="navbarNav">
               <div class="logo">
-                  <a routerLink="/">Neptune | {{companyName}}</a>
+                  <a routerLink="/" [title]="companyName">Neptune | {{companyName}}</a>
               </div>
               <ul class="navbar-nav">
                   <li class="nav-item">
                       <a class="nav-link hide-sidebar-toggle-button"><i class="material-icons">last_page</i></a>
                   </li>
-                  <li class="nav-item dropdown hidden-on-mobile">
+                  <li class="nav-item dropdown hidden-on-mobile" title="Sunucu Seç">
                       <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="material-icons">add</i>
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="addDropdownLink">
-                          @for (company of auth.user.companies; track company) {
-                            <li><a [(ngModel)]="auth.user.companyId" (click)="changeCompany(company.Id)" class="dropdown-item">{{company.Name}}</a></li>
-                          }
+                        @for (company of auth.user.companies; track company) {
+                          <li><a (click)="changeCompany(company.Id)" [class.active]="auth.user.companyId==company.Id" class="dropdown-item">{{company.Name}}</a></li>
+                        }
                       </ul>
                   </li>
               </ul>

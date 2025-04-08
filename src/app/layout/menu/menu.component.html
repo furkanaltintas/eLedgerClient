@@ -10,10 +10,15 @@
 
 <ng-template #recursiveMenu let-menu>
   <li>
-    <a routerLink="{{menu.url}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-      {{ menu.title }}
-      <i *ngIf="menu.subMenus?.length > 0" class="material-icons has-sub-menu">keyboard_arrow_down</i>
-    </a>
+    <ng-container *ngIf="!menu.noUrl; else noLink">
+        <a [routerLink]="menu.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          {{ menu.title }}
+          <i *ngIf="menu.subMenus?.length > 0" class="material-icons has-sub-menu">keyboard_arrow_down</i>
+        </a>
+    </ng-container>
+    <ng-template #noLink>
+      <a [ngClass]="{'active': isActive(menu)}">{{ menu.title }}</a>
+    </ng-template>
 
     <ul class="sub-menu" *ngIf="menu.subMenus?.length > 0">
       <ng-container *ngFor="let sub of menu.subMenus">

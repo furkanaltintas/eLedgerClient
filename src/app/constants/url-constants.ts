@@ -18,3 +18,15 @@ export const USERS_ENDPOINT: string = "/Users";
 export const COMPANIES_ENDPOINT: string = "/Companies";
 export const COMPANIES_USER_COMPANIES: string = "/Companies/user-companies";
 export const COMPANIES_MIGRATEALL_ENDPOINT: string = "/Companies/migrateAll";
+
+// Cash Registers
+export const CASH_REGISTERS_ENDPOINT: string = "/CashRegisters";
+
+// Cash Register Details
+export const CASH_REGISTER_DETAILS_ENDPOINT: string = "/CashRegisterDetails";
+
+// Banks
+export const BANKS_ENDPOINT: string = "/Banks";
+
+// Bank Details
+export const BANK_DETAILS_ENDPOINT: string = "/BankDetails";

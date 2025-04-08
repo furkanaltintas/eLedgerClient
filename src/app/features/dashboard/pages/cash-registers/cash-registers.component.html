@@ -1,0 +1,110 @@
+<app-section-description title="Safes"></app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Cash Register Name</th>
+          <th>Currency Type</th>
+          <th>Inflow</th>
+          <th>Outflow</th>
+          <th>Balance</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (cashRegister of cashRegisters | cashRegister:search; track cashRegister) {
+        <tr>
+          <td>{{$index+1}}</td>
+          <td>{{cashRegister.name}}</td>
+          <td>{{cashRegister.currencyType.name}}</td>
+          <td>{{cashRegister.depositAmount | currency: changeCurrencyNameToSymbol(cashRegister.currencyType.name)}}</td>
+          <td>{{cashRegister.withdrawalAmount | currency: changeCurrencyNameToSymbol(cashRegister.currencyType.name)}}</td>
+          <td>
+            <span [ngClass]="cashRegister.depositAmount > cashRegister.withdrawalAmount ? 'text-success' : 'text-danger'">
+                {{(cashRegister.depositAmount - cashRegister.withdrawalAmount)| currency: changeCurrencyNameToSymbol(cashRegister.currencyType.name)}}
+            </span>
+          </td>
+          <td>
+            <button routerLink="/cash-registers/details/{{cashRegister.id}}" class="btn btn-dark btn-sm">Details</button>
+            <button (click)="get(cashRegister)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+            <button (click)="delete(cashRegister)" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+      </tr>
+      }
+  </tbody>
+</table>
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Cash Register Create Form</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Cash Register</label>
+          <input [(ngModel)]="createModel.name" type="text" class="form-control" name="name" required>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+          <label>Döviz Tipi</label>
+          <select [(ngModel)]="createModel.currencyTypeValue" class="form-control" name="currencyTypeValue" required>
+            @for (type of currencyTypes; track type) {
+              <option [value]="type.value">{{type.name}}</option>
+            }
+          </select>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Cash Register Update Form</h5>
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Cash Register</label>
+            <input [(ngModel)]="updateModel.name" type="text" class="form-control" name="name" required>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group">
+            <label>Döviz Tipi</label>
+            <select [(ngModel)]="updateModel.currencyTypeValue" class="form-control" name="currencyTypeValue" required>
+              @for (type of currencyTypes; track type) {
+                <option [value]="type.value">{{type.name}}</option>
+              }
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

@@ -31,9 +31,12 @@ export class HeaderComponent {
       this.swal.callToast("Zaten bu şirket panelindesin", "question");
     } else {
       this.http.post<LoginResponse>(AUTH_CHANGE_COMPANY, {companyId: companyId}, (res) => {
-        localStorage.clear();
-        localStorage.setItem(TOKEN_KEY, res.value!.token);
-        document.location.reload(); // Sayfayı otomatik olarak refresh işlemi yapıyor.
+        this.swal.callToast("Şirket değiştirildi", "success");
+        setTimeout(() => {
+          localStorage.clear();
+          localStorage.setItem(TOKEN_KEY, res.value!.token);
+          document.location.reload(); // Sayfayı otomatik olarak refresh işlemi yapıyor.
+        }, 1000);
       });
     }
   }

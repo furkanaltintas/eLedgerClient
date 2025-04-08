@@ -2,6 +2,7 @@ export class MenuModel {
   title: string ="";
   icon: string = "";
   url: string = "";
-  showThisMenuJustAdmin: boolean = false;
-  subMenus: MenuModel[] = [];
+  noUrl?: boolean = false;
+  showThisMenuJustAdmin?: boolean = false;
+  subMenus?: MenuModel[] = [];
 }
