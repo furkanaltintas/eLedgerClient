@@ -9,4 +9,5 @@ import { FormsModule } from '@angular/forms';
 })
 export class SectionDescriptionComponent {
   @Input() title: string = '';
+  @Input() buttonStatus: boolean = true;
 }

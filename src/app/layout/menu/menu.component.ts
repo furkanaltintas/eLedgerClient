@@ -42,6 +42,18 @@ export class MenuComponent {
       icon: "banks",
       url: "/banks",
       showThisMenuJustAdmin: true
+    },
+    {
+      title: "Currents",
+      icon: "currents",
+      url: "/customers",
+      showThisMenuJustAdmin: true
+    },
+    {
+      title: "Products",
+      icon: "products",
+      url: "/products",
+      showThisMenuJustAdmin: true
     }
   ];
 

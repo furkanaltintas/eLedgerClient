@@ -2,8 +2,10 @@
   <div class="section-description-content flex-grow-1">
       <h1>{{title}}</h1>
   </div>
-  <div class="section-description-actions">
+  @if(buttonStatus) {
+    <div class="section-description-actions">
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="material-icons">add</i>Create</button>
   </div>
+  }
   <ng-content></ng-content>
 </div>

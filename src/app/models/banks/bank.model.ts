@@ -1,4 +1,4 @@
-import { BankDetailModel } from "../bank-detail/bank-detail.model";
+import { BankDetailModel } from "../bank-details/bank-detail.model";
 import { CurrencyTypeModel } from "../cash-registers/currency-type.model";
 
 export class BankModel {

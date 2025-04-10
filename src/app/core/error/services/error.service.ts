@@ -20,6 +20,8 @@ export class ErrorService {
     switch (err.status) {
       case 0:
         return ErrorMessages.API_NOT_AVAILABLE;
+      case 400:
+        return "Gönderilen parametrelerden biri eksik";
       case 401:
         return ErrorMessages.UNAUTHORIZED;
       case 404:

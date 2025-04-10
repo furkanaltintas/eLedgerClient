@@ -14,6 +14,9 @@ import { CashRegistersComponent } from './features/dashboard/pages/cash-register
 import { CashRegisterDetailsComponent } from './features/dashboard/pages/cash-register-details/cash-register-details.component';
 import { BanksComponent } from './features/dashboard/pages/banks/banks.component';
 import { BankDetailsComponent } from './features/dashboard/pages/bank-details/bank-details.component';
+import { CustomersComponent } from './features/dashboard/pages/customers/customers.component';
+import { CustomerDetailsComponent } from './features/dashboard/pages/customer-details/customer-details.component';
+import { ProductsComponent } from './features/dashboard/pages/products/products.component';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -54,6 +57,34 @@ export const routes: Routes = [
         }
       ]
     },
+    {
+      path: 'customers',
+      canActivate : [roleGuard],
+      children: [
+        {
+          path: "",
+          component: CustomersComponent,
+        },
+        {
+          path: "details/:id",
+          component: CustomerDetailsComponent
+        }
+      ]
+    },
+    {
+      path: 'products',
+      canActivate : [roleGuard],
+      children: [
+        {
+          path: "",
+          component: ProductsComponent,
+        },
+        {
+          path: "details/:id",
+          component: ProductsComponent
+        }
+      ]
+    }
   ]
   },
   { path: 'forbidden', component: ForbiddenComponent},

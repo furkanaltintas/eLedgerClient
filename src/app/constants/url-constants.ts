@@ -30,3 +30,12 @@ export const BANKS_ENDPOINT: string = "/Banks";
 
 // Bank Details
 export const BANK_DETAILS_ENDPOINT: string = "/BankDetails";
+
+// Customers
+export const CUSTOMERS_ENDPOINT: string = "/Customers";
+
+// Customer Details
+export const CUSTOMER_DETAILS_ENDPOINT: string = "/CustomerDetails";
+
+// Products
+export const PRODUCTS_ENDPOINT: string = "/Products";

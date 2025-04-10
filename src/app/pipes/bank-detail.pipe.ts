@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { BankDetailModel } from '../models/bank-detail/bank-detail.model';
+import { BankDetailModel } from '../models/bank-details/bank-detail.model';
 
 @Pipe({
   name: 'bankDetail'
