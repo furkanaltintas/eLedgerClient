@@ -1,0 +1,90 @@
+<app-section-description title="Ürünler"></app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Ürün Adı</th>
+          <th>Giriş</th>
+          <th>Çıkış</th>
+          <th>Bakiye</th>
+          <th>İşlemler</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (product of products | product:search; track product) {
+        <tr>
+          <td>{{$index+1}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.deposit}}</td>
+          <td>{{product.withdrawal}}</td>
+          <td>
+            <span [ngClass]="product.deposit > product.withdrawal ? 'text-success' : 'text-danger'">
+                {{(product.deposit - product.withdrawal)}}
+            </span>
+          </td>
+          <td>
+            <button routerLink="/products/details/{{product.id}}" class="btn btn-dark btn-sm">Details</button>
+            <button (click)="get(product)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+            <button (click)="delete(product)" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+      </tr>
+      }
+  </tbody>
+</table>
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Ürün Ekleme Formu</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Ürün Adı</label>
+          <input [(ngModel)]="createModel.name" type="text" class="form-control" name="name" required>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Cash Register Update Form</h5>
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Ürün Adı</label>
+            <input [(ngModel)]="updateModel.name" type="text" class="form-control" name="name" required>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark w-100">Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
