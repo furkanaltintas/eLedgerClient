@@ -6,9 +6,11 @@ import { SectionDescriptionComponent } from '../../../../layout/section-descript
 import { CashRegisterModel } from '../../../../models/cash-registers/cash-register.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
-import { CASH_REGISTER_DETAILS_ENDPOINT, CASH_REGISTERS_ENDPOINT } from '../../../../constants/url-constants';
+import { BANKS_ENDPOINT, CASH_REGISTER_DETAILS_ENDPOINT, CASH_REGISTERS_ENDPOINT, CUSTOMERS_ENDPOINT } from '../../../../constants/url-constants';
 import { CashRegisterDetailModel } from '../../../../models/cash-register-details/cash-register-detail.model';
 import { ActivatedRoute } from '@angular/router';
+import { BankModel } from '../../../../models/banks/bank.model';
+import { CustomerModel } from '../../../../models/customers/customer.model';
 
 @Component({
   selector: 'app-cash-register-details',
@@ -22,6 +24,8 @@ export class CashRegisterDetailsComponent {
   updateModel: CashRegisterDetailModel = new CashRegisterDetailModel();
   cashRegister: CashRegisterModel = new CashRegisterModel();
   cashRegisters: CashRegisterModel[] = [];
+  banks: BankModel[] = [];
+  customers: CustomerModel[] = [];
   cashRegisterId: string = "";
   startDate: string = "";
   endDate: string = "";
@@ -45,6 +49,8 @@ export class CashRegisterDetailsComponent {
 
       this.loadCashRegister();
       this.loadCashRegisters();
+      this.loadBanks();
+      this.loadCustomers();
     });
   }
 
@@ -64,6 +70,18 @@ export class CashRegisterDetailsComponent {
     });
   }
 
+  loadBanks() {
+    this.http.get<BankModel[]>(BANKS_ENDPOINT, (res) => {
+      this.banks = res.value!;
+    });
+  }
+
+  loadCustomers() {
+     this.http.get<CustomerModel[]>(CUSTOMERS_ENDPOINT, (res) => {
+       this.customers = res.value!;
+     });
+  }
+
   get(model: CashRegisterDetailModel) {
     this.updateModel = { ...model };
     this.updateModel.amount = this.updateModel.depositAmount + this.updateModel.withdrawalAmount;
@@ -75,7 +93,20 @@ export class CashRegisterDetailsComponent {
       this.createModel.amount = +this.createModel.amount;
       this.createModel.oppositeAmount = +this.createModel.oppositeAmount;
 
-      if(this.createModel.recordType === 0) this.createModel.oppositeCashRegisterId = null;
+      if(this.createModel.recordType == 0) {
+        this.createModel.oppositeBankId = null;
+        this.createModel.oppositeCashRegisterId = null;
+        this.createModel.oppositeCustomerId = null;
+      } else if (this.createModel.recordType == 1) {
+        this.createModel.oppositeBankId = null;
+        this.createModel.oppositeCustomerId = null;
+      } else if (this.createModel.recordType == 2) {
+        this.createModel.oppositeCashRegisterId = null;
+        this.createModel.oppositeCustomerId = null;
+      } else if (this.createModel.recordType == 3) {
+        this.createModel.oppositeCashRegisterId  = null;
+        this.createModel.oppositeBankId = null;
+      }
 
       if(this.createModel.oppositeAmount === 0) this.createModel.oppositeAmount = this.createModel.amount;
 
@@ -140,6 +171,13 @@ export class CashRegisterDetailsComponent {
     const cash = this.cashRegisters.find(c => c.id === this.createModel.oppositeCashRegisterId);
     if(cash) {
       this.createModel.oppositeCashRegister = cash;
+    }
+  }
+
+  setOppositeBank() {
+    const bank = this.banks.find(c => c.id === this.createModel.oppositeBankId);
+    if(bank) {
+      this.createModel.oppositeBank = bank;
     }
   }
 }
