@@ -1,0 +1,28 @@
+<app-section-description title="{{customer.name}} Current Movements" [buttonStatus]="false"></app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Inflow</th>
+          <th>Outflow</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (detail of customer.details | customerDetail:search; track detail) {
+        <tr>
+          <th>{{$index+1}}</th>
+          <th>{{detail.date | date: 'dd.MM.yyyy'}}</th>
+          <th>{{detail.type.name}}</th>
+          <th>{{detail.description}}</th>
+          <th>{{detail.depositAmount | currency: '₺' }}</th>
+          <th>{{detail.withdrawalAmount | currency: '₺' }}</th>
+      </tr>
+      }
+  </tbody>
+</table>
