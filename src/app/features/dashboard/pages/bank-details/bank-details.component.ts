@@ -3,12 +3,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BankDetailPipe } from '../../../../pipes/bank-detail.pipe';
 import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
-import { BankDetailModel } from '../../../../models/bank-detail/bank-detail.model';
+import { BankDetailModel } from '../../../../models/bank-details/bank-detail.model';
 import { BankModel } from '../../../../models/banks/bank.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { ActivatedRoute } from '@angular/router';
-import { BANK_DETAILS_ENDPOINT, BANKS_ENDPOINT } from '../../../../constants/url-constants';
+import { BANK_DETAILS_ENDPOINT, BANKS_ENDPOINT, CASH_REGISTERS_ENDPOINT, CUSTOMERS_ENDPOINT } from '../../../../constants/url-constants';
+import { CashRegisterModel } from '../../../../models/cash-registers/cash-register.model';
+import { CustomerModel } from '../../../../models/customers/customer.model';
 
 @Component({
   selector: 'app-bank-details',
@@ -22,6 +24,8 @@ export class BankDetailsComponent {
   updateModel: BankDetailModel = new BankDetailModel();
   bank: BankModel = new BankModel();
   banks: BankModel[] = [];
+  customers: CustomerModel[]= [];
+  cashRegisters: CashRegisterModel[] = [];
   bankId: string = "";
   startDate: string = "";
   endDate: string = "";
@@ -46,6 +50,8 @@ export class BankDetailsComponent {
     this.createModel.bankId = this.bankId;
     this.loadBank();
     this.loadBanks();
+    this.loadCashRegisters();
+    this.loadCustomers();
   }
 
   loadBank() {
@@ -64,6 +70,18 @@ export class BankDetailsComponent {
     });
   }
 
+  loadCashRegisters() {
+    this.http.get<CashRegisterModel[]>(CASH_REGISTERS_ENDPOINT, (res) => {
+      this.cashRegisters = res.value!;
+    });
+  }
+
+  loadCustomers() {
+     this.http.get<CustomerModel[]>(CUSTOMERS_ENDPOINT, (res) => {
+       this.customers = res.value!;
+     });
+  }
+
   get(model: BankDetailModel) {
     this.updateModel = { ...model };
     this.updateModel.amount = this.updateModel.depositAmount + this.updateModel.withdrawalAmount;
@@ -75,7 +93,21 @@ export class BankDetailsComponent {
       this.createModel.amount = +this.createModel.amount;
       this.createModel.oppositeAmount = +this.createModel.oppositeAmount;
 
-      if(this.createModel.recordType === 0) this.createModel.oppositeBankId = null;
+      if(this.createModel.recordType == 0) {
+        this.createModel.oppositeBankId = null;
+        this.createModel.oppositeCustomerId = null;
+        this.createModel.oppositeCashRegisterId = null;
+      } else if (this.createModel.recordType == 1) {
+        this.createModel.oppositeCashRegisterId = null;
+        this.createModel.oppositeCustomerId = null;
+      } else if (this.createModel.recordType == 2) {
+        this.createModel.oppositeBankId = null;
+        this.createModel.oppositeCustomerId = null;
+      } else if (this.createModel.recordType == 3) {
+        this.createModel.oppositeBankId = null;
+        this.createModel.oppositeCashRegisterId = null;
+      }
+
       if(this.createModel.oppositeAmount === 0) this.createModel.oppositeAmount = this.createModel.amount;
 
       this.http.post<string>(
@@ -136,10 +168,16 @@ export class BankDetailsComponent {
   }
 
   setOppositeBank() {
-    debugger;
-    const cash = this.banks.find(c => c.id == this.createModel.oppositeBankId);
+    const bank = this.banks.find(c => c.id == this.createModel.oppositeBankId);
+    if(bank) {
+      this.createModel.oppositeBank = bank;
+    }
+  }
+
+  setOppositeCash() {
+    const cash = this.cashRegisters.find(c => c.id == this.createModel.oppositeCashRegisterId);
     if(cash) {
-      this.createModel.oppositeBank = cash;
+      this.createModel.oppositeCash = cash;
     }
   }
 }

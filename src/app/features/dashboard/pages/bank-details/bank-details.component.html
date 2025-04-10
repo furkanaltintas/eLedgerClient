@@ -81,15 +81,17 @@
           <select [(ngModel)]="createModel.recordType" class="form-control" name="recordType">
             <option value="0">Diğer</option>
             <option value="1">Banka</option>
+            <option value="2">Kasa</option>
+            <option value="3">Cari</option>
           </select>
           <div class="invalid-feedback"></div>
         </div>
         @if(createModel.recordType == 1) {
           <div class="form-group">
             <label>Safe</label>
-            <select [(ngModel)]="createModel.oppositeBankId" (change)="setOppositeBank()" class="form-control" name="oppositeCashRegisterId">
-              @for (cash of banks; track cash) {
-                <option [value]="cash.id">{{cash.name}}</option>
+            <select [(ngModel)]="createModel.oppositeBankId" (change)="setOppositeBank()" class="form-control" name="oppositeBankId">
+              @for (bank of banks; track bank) {
+                <option [value]="bank.id">{{bank.name}}</option>
               }
             </select>
             <div class="invalid-feedback"></div>
@@ -103,6 +105,47 @@
             </div>
           }
         }
+
+        @if(createModel.recordType == 2) {
+          <div class="form-group">
+            <label>Cash Register</label>
+            <select [(ngModel)]="createModel.oppositeCashRegisterId" (change)="setOppositeCash()" class="form-control" name="oppositeCashRegisterId">
+              @for (cash of cashRegisters; track cash) {
+                <option [value]="cash.id">{{cash.name}}</option>
+              }
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          @if(createModel.oppositeCash.currencyType.value != bank.currencyType.value) {
+            <div class="form-group">
+              <label>Against Amount</label>
+              <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
+              <div class="invalid-feedback"></div>
+            </div>
+          }
+        }
+
+        @if(createModel.recordType == 3) {
+          <div class="form-group">
+            <label>Cari</label>
+            <select [(ngModel)]="createModel.oppositeCustomerId" class="form-control" name="oppositeCustomerId">
+              @for (customer of customers; track customer) {
+                <option [value]="customer.id">{{customer.name}}</option>
+              }
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          @if(1 != bank.currencyType.value) {
+            <div class="form-group">
+              <label>Against Amount</label>
+              <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
+              <div class="invalid-feedback"></div>
+            </div>
+          }
+        }
+
         <div class="form-group">
           <label>Description</label>
           <input [(ngModel)]="createModel.description" class="form-control" name="description" minlength="3" required>
