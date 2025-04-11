@@ -39,3 +39,9 @@ export const CUSTOMER_DETAILS_ENDPOINT: string = "/CustomerDetails";
 
 // Products
 export const PRODUCTS_ENDPOINT: string = "/Products";
+
+// Product Details
+export const PRODUCT_DETAILS_ENDPOINT: string = "/ProductDetails";
+
+// Invoices
+export const INVOICES_ENDPOINT: string = "/Invoices";
