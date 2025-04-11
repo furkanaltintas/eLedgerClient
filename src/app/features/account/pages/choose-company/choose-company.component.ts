@@ -25,7 +25,6 @@ export class ChooseCompanyComponent {
     private router: Router,
     private swal : SwalService
   ) {
-    debugger;
     this.auth.isTokenValid();
     this.userCompanies();
   }

@@ -38,20 +38,19 @@
         </div>
         <div class="app-auth-container">
             <div class="logo">
-                <a routerLink="/">Neptune</a>
+                <a routerLink="/">e-Muhasebe</a>
             </div>
             <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" autocomplete="off">
               <div class="auth-credentials m-b-xxl">
-                <label class="form-label">Email Address</label>
+                <label class="form-label">Mail Adresi</label>
                 <input [(ngModel)]="model.email" name="email" type="email" class="form-control m-b-md" placeholder="example@neptune.com">
 
-                <label class="form-label">Password</label>
+                <label class="form-label">Şifre</label>
                 <input [(ngModel)]="model.password" name="password" type="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
             </div>
 
             <div class="auth-submit">
-                <button class="btn btn-primary">Sign In</button>
-                <a routerLink="/forgot-password" class="auth-forgot-password float-end">Forgot password?</a>
+                <button class="btn btn-primary">Giriş Yap</button>
             </div>
             </form>
         </div>
