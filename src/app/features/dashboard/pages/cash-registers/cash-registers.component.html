@@ -46,7 +46,6 @@
       <div class="modal-header">
         <h5 class="modal-title" id="createModalLabel">Cash Register Create Form</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
@@ -81,7 +80,6 @@
       <div class="modal-header">
         <h5 class="modal-title" id="updateModalLabel">Cash Register Update Form</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
