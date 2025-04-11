@@ -97,6 +97,7 @@ export class AuthService {
     this.user.isAdmin = decoded["IsAdmin"] === "True";
     this.user.companies = JSON.parse(decoded["Companies"]);
     this.user.companyId = decoded["CompanyId"];
+    debugger;
   }
 
   isTokenValid(): boolean {
@@ -110,7 +111,11 @@ export class AuthService {
     return true;
   }
 
+  isTheCompanyOne():boolean {
+    return this.user.companies.length == 1;
+  }
+
   isCompanySelected(): boolean {
-    return this.user.companyId !== "00000000-0000-0000-0000-000000000000"; // Dolu ise
+    return this.user.companyId === "00000000-0000-0000-0000-000000000000"; // Boş ise
   }
 }

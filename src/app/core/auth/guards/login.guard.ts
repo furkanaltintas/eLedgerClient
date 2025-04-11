@@ -11,6 +11,8 @@ export const LoginGuard: CanActivateFn = (route, state) => {
     router.navigateByUrl("/login");
     return false;
   } else {
+    debugger;
+    if(auth.isTheCompanyOne()) router.navigate(['/']);
     return true;
   }
 };
