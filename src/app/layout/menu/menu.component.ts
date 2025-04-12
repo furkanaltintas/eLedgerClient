@@ -15,41 +15,41 @@ export class MenuComponent {
   activeMenu: any = null;
   menus: MenuModel[] = [
     {
-      title: "Home",
+      title: "Ana Sayfa",
       url: "/",
     },
     {
-      title: "Users",
+      title: "Kullanıcılar",
       url: "/users",
       showThisMenuJustAdmin: true // Adminin görebileceği sayfalar
     },
     {
-      title: "Companies",
+      title: "Şirketler",
       url: "/companies",
       showThisMenuJustAdmin: true
     },
     {
-      title: "Cash Register",
+      title: "Kasalar",
       url: "/cash-registers",
       showThisMenuJustAdmin: true
     },
     {
-      title: "Banks",
+      title: "Bankalar",
       url: "/banks",
       showThisMenuJustAdmin: true
     },
     {
-      title: "Currents",
+      title: "Cariler",
       url: "/customers",
       showThisMenuJustAdmin: true
     },
     {
-      title: "Products",
+      title: "Ürünler",
       url: "/products",
       showThisMenuJustAdmin: true
     },
     {
-      title: "Invoices",
+      title: "Faturalar",
       url: "/invoices",
       showThisMenuJustAdmin: true
     }
