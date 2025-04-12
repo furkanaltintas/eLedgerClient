@@ -1,6 +1,6 @@
 <app-section-description title="Ürünler"></app-section-description>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin...">
 
 <table class="table">
   <thead class="table-dark">
@@ -14,7 +14,7 @@
       </tr>
   </thead>
   <tbody>
-      @for (product of products | product:search; track product) {
+      @for (product of products | product:search | paginate: { itemsPerPage: 5, currentPage: p}; track product) {
         <tr>
           <td>{{$index+1}}</td>
           <td>{{product.name}}</td>
@@ -35,7 +35,7 @@
   </tbody>
 </table>
 
-
+<app-pagination (pageChange)="p = $event"></app-pagination>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Create</button>
+        <button type="submit" class="btn btn-dark w-100">Kaydet</button>
       </div>
     </form>
     </div>
@@ -80,7 +80,7 @@
           </div>
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Update</button>
+        <button type="submit" class="btn btn-dark w-100">Güncelle</button>
       </div>
     </form>
     </div>

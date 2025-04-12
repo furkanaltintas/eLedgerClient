@@ -1,17 +1,15 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ProductPipe } from '../../../../pipes/product.pipe';
-import { RouterLink } from '@angular/router';
-import { FormsModule, NgForm } from '@angular/forms';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
-import { CommonModule } from '@angular/common';
 import { ProductModel } from '../../../../models/products/product.model';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { HttpService } from '../../../../core/api/http.service';
 import { PRODUCTS_ENDPOINT } from '../../../../constants/url-constants';
+import { NgForm } from '@angular/forms';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, FormsModule,RouterLink, ProductPipe, SectionDescriptionComponent],
+  imports: [SharedModule, ProductPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -20,6 +18,7 @@ export class ProductsComponent {
   createModel: ProductModel = new ProductModel();
   updateModel: ProductModel = new ProductModel();
   search: string = '';
+  p: number = 1;
 
   @ViewChild('createModalCloseBtn') createModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;
   @ViewChild('updateModalCloseBtn') updateModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;

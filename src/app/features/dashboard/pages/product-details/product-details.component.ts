@@ -3,14 +3,12 @@ import { ProductModel } from '../../../../models/products/product.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductDetailPipe } from '../../../../pipes/product-detail.pipe';
-import { FormsModule } from '@angular/forms';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
-import { CommonModule } from '@angular/common';
 import { PRODUCT_DETAILS_ENDPOINT } from '../../../../constants/url-constants';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, FormsModule, ProductDetailPipe, SectionDescriptionComponent],
+  imports: [SharedModule, ProductDetailPipe],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
