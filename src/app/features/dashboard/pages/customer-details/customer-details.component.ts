@@ -15,7 +15,7 @@ import { CUSTOMER_DETAILS_ENDPOINT } from '../../../../constants/url-constants';
   styleUrl: './customer-details.component.css'
 })
 export class CustomerDetailsComponent {
-  customer: CustomerModel = new CustomerModel();;
+  customer: CustomerModel = new CustomerModel();
   customerId: string = "";
   search: string = '';
 
