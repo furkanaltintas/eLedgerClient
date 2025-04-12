@@ -1,9 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { InvoicePipe } from '../../../../pipes/invoice.pipe';
-import { RouterLink } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
 import { InvoiceModel } from '../../../../models/invoices/invoice.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
@@ -11,10 +7,13 @@ import { CUSTOMERS_ENDPOINT, INVOICES_ENDPOINT, PRODUCTS_ENDPOINT } from '../../
 import { CustomerModel } from '../../../../models/customers/customer.model';
 import { ProductModel } from '../../../../models/products/product.model';
 import { InvoiceDetailModel } from '../../../../models/invoice-details/invoice-detail.model';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-invoices',
-  imports: [CommonModule, FormsModule, InvoicePipe, SectionDescriptionComponent],
+  imports: [SharedModule, InvoicePipe],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css',
   providers: [DatePipe]
@@ -26,6 +25,7 @@ export class InvoicesComponent {
   createModel: InvoiceModel = new InvoiceModel();
   updateModel: InvoiceModel = new InvoiceModel();
   search: string = '';
+  p: number = 1;
 
   @ViewChild('createModalCloseBtn') createModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;
   @ViewChild('updateModalCloseBtn') updateModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;

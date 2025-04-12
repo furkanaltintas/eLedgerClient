@@ -1,6 +1,6 @@
 <app-section-description title="Faturalar"></app-section-description>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search..." />
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin..." />
 
 <table class="table">
   <thead class="table-dark">
@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (invoice of invoices | invoice:search; track invoice) {
+    @for (invoice of invoices | invoice:search | paginate: { itemsPerPage: 5, currentPage: p}; track invoice) {
     <tr>
       <td>{{ $index + 1 }}</td>
       <td>{{ invoice.type.name }}</td>
@@ -34,6 +34,8 @@
     }
   </tbody>
 </table>
+
+<app-pagination (pageChange)="p = $event"></app-pagination>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
@@ -118,7 +120,7 @@
               <div class="form-group">
                 <label>İşlemler</label>
                 <button type="button" (click)="addDetail()" class="btn btn-danger w-100 text-start">
-                  Ekle
+                  Kaydet
                 </button>
               </div>
             </div>
