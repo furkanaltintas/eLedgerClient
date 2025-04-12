@@ -1,0 +1,30 @@
+<app-section-description title="{{product.name}} Stok Hareketleri" [buttonStatus]="false"></app-section-description>
+
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+
+<table class="table">
+  <thead class="table-dark">
+      <tr>
+          <th>#</th>
+          <th>Tarih</th>
+          <th>Açıklama</th>
+          <th>Giriş</th>
+          <th>Çıkış</th>
+          <th>Birim Fiyatı</th>
+          <th>Toplam Tutar</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (product of product.details | productDetail:search; track product) {
+        <tr>
+          <th>{{$index+1}}</th>
+          <th>{{product.date | date: 'dd.MM.yyyy'}}</th>
+          <th>{{product.description}}</th>
+          <th>{{product.deposit}}</th>
+          <th>{{product.withdrawal}}</th>
+          <th>{{product.price | currency: '₺':true}}</th>
+          <th>{{product.price * (product.deposit + product.withdrawal) | currency: '₺':true}}</th>
+      </tr>
+      }
+  </tbody>
+</table>
