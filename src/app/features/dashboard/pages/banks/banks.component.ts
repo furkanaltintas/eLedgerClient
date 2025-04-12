@@ -1,18 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BankPipe } from '../../../../pipes/bank.pipe';
-import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
+import { NgForm } from '@angular/forms';
 import { BankModel } from '../../../../models/banks/bank.model';
 import { CurrencyTypes } from '../../../../models/cash-registers/currency-type.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { BANKS_ENDPOINT } from '../../../../constants/url-constants';
-import { RouterLink } from '@angular/router';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
 
 @Component({
   selector: 'app-banks',
-  imports: [CommonModule, FormsModule,RouterLink, BankPipe, SectionDescriptionComponent],
+  imports: [SharedModule, BankPipe],
   templateUrl: './banks.component.html',
   styleUrl: './banks.component.css'
 })
@@ -22,6 +20,7 @@ export class BanksComponent {
   updateModel: BankModel = new BankModel();
   currencyTypes = CurrencyTypes;
   search: string = '';
+  p: number = 1;
 
   @ViewChild('createModalCloseBtn') createModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;
   @ViewChild('updateModalCloseBtn') updateModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;

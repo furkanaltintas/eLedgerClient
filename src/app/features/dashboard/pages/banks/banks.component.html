@@ -1,22 +1,22 @@
-<app-section-description title="Banks"></app-section-description>
+<app-section-description title="Bankalar"></app-section-description>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin...">
 
 <table class="table">
   <thead class="table-dark">
       <tr>
-          <th>#</th>
-          <th>Bank Name</th>
-          <th>IBAN</th>
-          <th>Currency Type</th>
-          <th>Inflow</th>
-          <th>Outflow</th>
-          <th>Balance</th>
-          <th>Actions</th>
+        <th>#</th>
+        <th>Banka Adı</th>
+        <th>IBAN</th>
+        <th>Döviz Tipi</th>
+        <th>Giriş</th>
+        <th>Çıkış</th>
+        <th>Bakiye</th>
+        <th>İşlemler</th>
       </tr>
   </thead>
   <tbody>
-      @for (bank of banks | bank:search; track bank) {
+      @for (bank of banks | bank:search | paginate: { itemsPerPage: 5, currentPage: p}; track bank) {
         <tr>
           <td>{{$index+1}}</td>
           <td>{{bank.name}}</td>
@@ -30,30 +30,30 @@
             </span>
           </td>
           <td>
-            <button routerLink="/banks/details/{{bank.id}}" class="btn btn-dark btn-sm">Details</button>
-            <button (click)="get(bank)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
-            <button (click)="delete(bank)" class="btn btn-danger btn-sm">Delete</button>
+            <button routerLink="/banks/details/{{bank.id}}" class="btn btn-dark btn-sm">Detaylar</button>
+            <button (click)="get(bank)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Güncelle</button>
+            <button (click)="delete(bank)" class="btn btn-danger btn-sm">Sil</button>
           </td>
       </tr>
       }
   </tbody>
 </table>
 
-
+<app-pagination (pageChange)="p = $event"></app-pagination>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Bank Create Form</h5>
+        <h5 class="modal-title" id="createModalLabel">Banka Ekleme Formu</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
       <div class="modal-body">
         <div class="form-group">
-          <label>Bank Name</label>
+          <label>Banka Adı</label>
           <input [(ngModel)]="createModel.name" type="text" class="form-control" name="name" required>
           <div class="invalid-feedback"></div>
         </div>
@@ -63,7 +63,7 @@
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Currency Type</label>
+          <label>Döviz Tipi</label>
           <select [(ngModel)]="createModel.currencyType" class="form-control" name="currencyType" required>
             @for (type of currencyTypes; track type) {
               <option [value]="type.value">{{type.name}}</option>
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Create</button>
+        <button type="submit" class="btn btn-dark w-100">Kaydet</button>
       </div>
     </form>
     </div>
@@ -85,14 +85,14 @@
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">Cash Register Update Form</h5>
+        <h5 class="modal-title" id="updateModalLabel">Banka Güncelleme Formu</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
-            <label>Bank Name</label>
+            <label>Banka Adı</label>
             <input [(ngModel)]="updateModel.name" type="text" class="form-control" name="name" required>
             <div class="invalid-feedback"></div>
           </div>
@@ -102,7 +102,7 @@
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group">
-            <label>Currency Type</label>
+            <label>Döviz Tipi</label>
             <select [(ngModel)]="updateModel.currencyTypeValue" class="form-control" name="currencyTypeValue" required>
               @for (type of currencyTypes; track type) {
                 <option [value]="type.value">{{type.name}}</option>
@@ -112,7 +112,7 @@
           </div>
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Update</button>
+        <button type="submit" class="btn btn-dark w-100">Güncelle</button>
       </div>
     </form>
     </div>
