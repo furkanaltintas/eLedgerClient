@@ -16,43 +16,41 @@ export class MenuComponent {
   menus: MenuModel[] = [
     {
       title: "Home",
-      icon: "",
       url: "/",
     },
     {
       title: "Users",
-      icon: "user",
       url: "/users",
       showThisMenuJustAdmin: true // Adminin görebileceği sayfalar
     },
     {
       title: "Companies",
-      icon: "company",
       url: "/companies",
       showThisMenuJustAdmin: true
     },
     {
       title: "Cash Register",
-      icon: "cash",
       url: "/cash-registers",
       showThisMenuJustAdmin: true
     },
     {
       title: "Banks",
-      icon: "banks",
       url: "/banks",
       showThisMenuJustAdmin: true
     },
     {
       title: "Currents",
-      icon: "currents",
       url: "/customers",
       showThisMenuJustAdmin: true
     },
     {
       title: "Products",
-      icon: "products",
       url: "/products",
+      showThisMenuJustAdmin: true
+    },
+    {
+      title: "Invoices",
+      url: "/invoices",
       showThisMenuJustAdmin: true
     }
   ];
