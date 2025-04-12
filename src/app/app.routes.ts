@@ -17,6 +17,8 @@ import { BankDetailsComponent } from './features/dashboard/pages/bank-details/ba
 import { CustomersComponent } from './features/dashboard/pages/customers/customers.component';
 import { CustomerDetailsComponent } from './features/dashboard/pages/customer-details/customer-details.component';
 import { ProductsComponent } from './features/dashboard/pages/products/products.component';
+import { ProductDetailsComponent } from './features/dashboard/pages/product-details/product-details.component';
+import { InvoicesComponent } from './features/dashboard/pages/invoices/invoices.component';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -81,7 +83,21 @@ export const routes: Routes = [
         },
         {
           path: "details/:id",
-          component: ProductsComponent
+          component: ProductDetailsComponent
+        }
+      ]
+    },
+    {
+      path: 'invoices',
+      canActivate : [roleGuard],
+      children: [
+        {
+          path: "",
+          component: InvoicesComponent,
+        },
+        {
+          path: "details/:id",
+          component: ProductDetailsComponent
         }
       ]
     }
