@@ -2,16 +2,15 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CompanyModel } from '../../../../models/companies/company.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { CompanyPipe } from '../../../../pipes/company.pipe';
-import { CommonModule } from '@angular/common';
-import { SectionDescriptionComponent } from "../../../../layout/section-description/section-description.component";
 import {  COMPANIES_ENDPOINT, COMPANIES_MIGRATEALL_ENDPOINT } from '../../../../constants/url-constants';
 import { DATABASE_DELETE_CONFIRMATION_MESSAGE, DATABASE_DELETE_CONFIRMATION_TITLE, DATABASE_UPDATE_CONFIRMATION_MESSAGE, DATABASE_UPDATE_CONFIRMATION_TITLE } from '../../../../constants/message-constants';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
 
 @Component({
   selector: 'app-companies',
-  imports: [CommonModule, FormsModule, CompanyPipe, SectionDescriptionComponent],
+  imports: [SharedModule, CompanyPipe],
   templateUrl: './companies.component.html',
   styleUrl: './companies.component.css'
 })
@@ -20,6 +19,7 @@ export class CompaniesComponent {
   createModel:CompanyModel = new CompanyModel();
   updateModel:CompanyModel = new CompanyModel();
   search: string = "";
+  p: number = 1;
 
   @ViewChild("createModalCloseBtn") createModalCloseBtn: ElementRef<HTMLButtonElement> | undefined;
   @ViewChild("updateModalCloseBtn") updateModalCloseBtn: ElementRef<HTMLButtonElement> | undefined;
