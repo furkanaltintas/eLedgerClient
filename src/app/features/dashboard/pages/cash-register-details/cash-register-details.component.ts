@@ -1,8 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CashRegisterDetailPipe } from '../../../../pipes/cash-register-detail.pipe';
-import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
+import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
 import { CashRegisterModel } from '../../../../models/cash-registers/cash-register.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
@@ -11,10 +10,11 @@ import { CashRegisterDetailModel } from '../../../../models/cash-register-detail
 import { ActivatedRoute } from '@angular/router';
 import { BankModel } from '../../../../models/banks/bank.model';
 import { CustomerModel } from '../../../../models/customers/customer.model';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
 
 @Component({
   selector: 'app-cash-register-details',
-  imports: [CommonModule, FormsModule, CashRegisterDetailPipe, SectionDescriptionComponent],
+  imports: [SharedModule, CashRegisterDetailPipe],
   templateUrl: './cash-register-details.component.html',
   styleUrl: './cash-register-details.component.css',
   providers:  [DatePipe]

@@ -1,8 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
 import { CashRegisterPipe } from '../../../../pipes/cash-register.pipe';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
 import { CashRegisterModel } from '../../../../models/cash-registers/cash-register.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
@@ -12,12 +9,12 @@ import {
   CASH_REGISTER_DELETE_CONFIRMATION_TITLE,
 } from '../../../../constants/message-constants';
 import { CurrencyTypes } from '../../../../models/cash-registers/currency-type.model';
-import { RouterLink } from '@angular/router';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cash-registers',
-  imports: [CommonModule, FormsModule, CashRegisterPipe, SectionDescriptionComponent, RouterLink
-  ],
+  imports: [SharedModule, CashRegisterPipe],
   templateUrl: './cash-registers.component.html',
   styleUrl: './cash-registers.component.css',
 })
@@ -27,6 +24,7 @@ export class CashRegistersComponent {
   updateModel: CashRegisterModel = new CashRegisterModel();
   currencyTypes = CurrencyTypes;
   search: string = '';
+  p: number = 1;
 
   @ViewChild('createModalCloseBtn') createModalCloseBtn:
     | ElementRef<HTMLButtonElement>

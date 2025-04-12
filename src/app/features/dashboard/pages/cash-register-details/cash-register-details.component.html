@@ -1,4 +1,4 @@
-<app-section-description title="{{cashRegister.name}} Cash Register Movement"></app-section-description>
+<app-section-description title="{{cashRegister.name}} Kasa Hareketi"></app-section-description>
 
 <div class="12 mb-3">
   <div class="row">
@@ -14,17 +14,17 @@
   </div>
 </div>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin...">
 
 <table class="table">
   <thead class="table-dark">
       <tr>
-          <th>#</th>
-          <th>Date</th>
-          <th>Description</th>
-          <th>Inflow</th>
-          <th>Outflow</th>
-          <th>Actions</th>
+        <th>#</th>
+        <th>Tarih</th>
+        <th>Açıklama</th>
+        <th>Giriş</th>
+        <th>Çıkış</th>
+        <th>İşlemler</th>
       </tr>
   </thead>
   <tbody>
@@ -36,8 +36,8 @@
           <th>{{detail.depositAmount | currency: changeCurrencyNameToSymbol(cashRegister.currencyType.name)}}</th>
           <th>{{detail.withdrawalAmount | currency: changeCurrencyNameToSymbol(cashRegister.currencyType.name)}}</th>
           <th>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(detail)">Update</button>
-            <button (click)="delete(detail)" class="btn btn-danger btn-sm">Delete</button>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(detail)">Güncelle</button>
+            <button (click)="delete(detail)" class="btn btn-danger btn-sm">Sil</button>
           </th>
       </tr>
       }
@@ -51,19 +51,19 @@
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Cash Register Movement Create Form</h5>
+        <h5 class="modal-title" id="createModalLabel">Kasa Hareketi Ekleme Formu</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
       <div class="modal-body">
         <div class="form-group">
-          <label>Date</label>
+          <label>Tarih</label>
           <input [(ngModel)]="createModel.date" type="date" class="form-control" name="date" required>
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Transaction Type</label>
+          <label>İşlem Tipi</label>
           <select [(ngModel)]="createModel.type" class="form-control" name="type" required>
             <option value="0">Giriş</option>
             <option value="1">Çıkış</option>
@@ -71,12 +71,12 @@
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Amount</label>
+          <label>Tutar</label>
           <input [(ngModel)]="createModel.amount" class="form-control" name="amount" required>
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Record Type</label>
+          <label>Kayıt Tipi</label>
           <select [(ngModel)]="createModel.recordType" class="form-control" name="recordType">
             <option value="0">Diğer</option>
             <option value="1">Kasa</option>
@@ -87,7 +87,7 @@
         </div>
         @if(createModel.recordType == 1) {
           <div class="form-group">
-            <label>Cash</label>
+            <label>Kasa</label>
             <select [(ngModel)]="createModel.oppositeCashRegisterId" (change)="setOppositeCashRegister()" class="form-control" name="oppositeCashRegisterId">
               @for (cash of cashRegisters; track cash) {
                 <option [value]="cash.id">{{cash.name}}</option>
@@ -97,7 +97,7 @@
           </div>
           @if(createModel.oppositeCashRegister.currencyType.value != cashRegister.currencyType.value) {
             <div class="form-group">
-              <label>Against Amount</label>
+              <label>Karşı Tutar</label>
               <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
               <div class="invalid-feedback"></div>
             </div>
@@ -106,7 +106,7 @@
 
         @if(createModel.recordType == 2) {
           <div class="form-group">
-            <label>Bank</label>
+            <label>Banka</label>
             <select [(ngModel)]="createModel.oppositeBankId" (change)="setOppositeBank()" class="form-control" name="oppositeBankId">
               @for (bank of banks; track bank) {
                 <option [value]="bank.id">{{bank.name}}</option>
@@ -116,7 +116,7 @@
           </div>
           @if(createModel.oppositeBank.currencyType.value != cashRegister.currencyType.value) {
             <div class="form-group">
-              <label>Against Amount</label>
+              <label>Karşı Tutar</label>
               <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
               <div class="invalid-feedback"></div>
             </div>
@@ -136,7 +136,7 @@
 
           @if(1 != cashRegister.currencyType.value) {
             <div class="form-group">
-              <label>Against Amount</label>
+              <label>Karşı Tutar</label>
               <input [(ngModel)]="createModel.oppositeAmount" class="form-control" name="oppositeAmount">
               <div class="invalid-feedback"></div>
             </div>
@@ -144,13 +144,13 @@
         }
 
         <div class="form-group">
-          <label>Description</label>
+          <label>Açıklama</label>
           <input [(ngModel)]="createModel.description" class="form-control" name="description" minlength="3" required>
           <div class="invalid-feedback"></div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Create</button>
+        <button type="submit" class="btn btn-dark w-100">Kaydet</button>
       </div>
     </form>
     </div>
@@ -162,30 +162,30 @@
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">Cash Register Update Form</h5>
+        <h5 class="modal-title" id="updateModalLabel">Kasa Hareket Güncelleme Formu</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
-            <label>Date</label>
+            <label>Tarih</label>
             <input [(ngModel)]="updateModel.date" type="date" class="form-control" name="date" required>
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group">
-            <label>Amount</label>
+            <label>Tutar</label>
             <input [(ngModel)]="updateModel.amount" class="form-control" name="amount" required>
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group">
-            <label>Description</label>
+            <label>Açıklama</label>
             <input [(ngModel)]="updateModel.description" class="form-control" name="description" minlength="3" required>
             <div class="invalid-feedback"></div>
           </div>
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Update</button>
+        <button type="submit" class="btn btn-dark w-100">Güncelle</button>
       </div>
     </form>
     </div>
