@@ -12,6 +12,6 @@ import { PageDescriptionComponent } from "../page-description/page-description.c
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent {
-  pageTitle: string = 'Admin Paneli';
-  pageDescription: string = 'Bu sayfa, sistemin yönetimi için kullanılan admin panelidir.';
+ pageTitle: string = 'Admin Paneli';
+ pageDescription: string = 'Bu sayfa, sistemin yönetimi için kullanılan admin panelidir.';
 }
