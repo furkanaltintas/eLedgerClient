@@ -1,30 +1,26 @@
-<app-section-description title="Currents"></app-section-description>
+<app-section-description title="Cariler"></app-section-description>
 
-<input
-  [(ngModel)]="search"
-  type="search"
-  class="form-control fc-search search-input"
-  placeholder="Search..."
-/>
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input"
+  placeholder="Aranacak değeri girin..." />
 
 <table class="table">
   <thead class="table-dark">
     <tr>
       <th>#</th>
-      <th>Current Name</th>
-      <th>Type</th>
-      <th>Province / District</th>
-      <th>Address</th>
-      <th>Tax Office</th>
-      <th>Tax Number</th>
-      <th>Entry</th>
-      <th>Exit</th>
-      <th>Balance</th>
-      <th>Actions</th>
+      <th>Cari Adı</th>
+      <th>Tipi</th>
+      <th>İl/İlçe</th>
+      <th>Adres</th>
+      <th>Vergi Dairesi</th>
+      <th>Vergi Numarası</th>
+      <th>Giriş</th>
+      <th>Çıkış</th>
+      <th>Bakiye</th>
+      <th>İşlemler</th>
     </tr>
   </thead>
   <tbody>
-    @for (customer of customers | customer:search; track customer) {
+    @for (customer of customers | customer:search | paginate: { itemsPerPage: 5, currentPage: p}; track customer) {
     <tr>
       <td>{{ $index + 1 }}</td>
       <td>{{ customer.name }}</td>
@@ -36,35 +32,26 @@
       <td>{{ customer.depositAmount | currency : "₺" }}</td>
       <td>{{ customer.withdrawalAmount | currency : "₺" }}</td>
       <td>
-        <span
-          [ngClass]="
+        <span [ngClass]="
             customer.depositAmount > customer.withdrawalAmount
               ? 'text-success'
               : 'text-danger'
-          "
-        >
+          ">
           {{
-            customer.depositAmount - customer.withdrawalAmount | currency : "₺"
+          customer.depositAmount - customer.withdrawalAmount | currency : "₺"
           }}
         </span>
       </td>
       <td>
-        <button
-          routerLink="/customers/details/{{ customer.id }}"
-          class="btn btn-dark btn-sm"
-        >
-          Details
+        <button routerLink="/customers/details/{{ customer.id }}" class="btn btn-dark btn-sm">
+          Detaylar
         </button>
-        <button
-          (click)="get(customer)"
-          class="btn btn-primary btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#updateModal"
-        >
-          Update
+        <button (click)="get(customer)" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+          data-bs-target="#updateModal">
+          Güncelle
         </button>
         <button (click)="delete(customer)" class="btn btn-danger btn-sm">
-          Delete
+          Sil
         </button>
       </td>
     </tr>
@@ -72,52 +59,27 @@
   </tbody>
 </table>
 
+<app-pagination (pageChange)="p = $event"></app-pagination>
+
 <!-- Create Modal -->
-<div
-  class="modal fade"
-  id="createModal"
-  aria-hidden="true"
-  aria-labelledby="createModalLabel"
-  tabindex="-1"
->
+<div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Current Create Form</h5>
-        <button
-          type="button"
-          #createModalCloseBtn
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <h5 class="modal-title" id="createModalLabel">Cari Ekleme Formu</h5>
+        <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
-      <form
-        #createForm="ngForm"
-        (ngSubmit)="create(createForm)"
-        autocomplete="off"
-      >
+      <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
-            <label>Current Name</label>
-            <input
-              [(ngModel)]="createModel.name"
-              type="text"
-              class="form-control"
-              name="name"
-              required
-            />
+            <label>Cari Adı</label>
+            <input [(ngModel)]="createModel.name" type="text" class="form-control" name="name" required />
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group">
-            <label>Type</label>
-            <select
-              [(ngModel)]="createModel.typeValue"
-              class="form-control"
-              name="typeValue"
-              required
-            >
+            <label>Tip</label>
+            <select [(ngModel)]="createModel.typeValue" class="form-control" name="typeValue" required>
               @for (type of customerTypes; track type) {
               <option [value]="type.value">{{ type.name }}</option>
               }
@@ -128,25 +90,16 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label>Tax Department</label>
-                  <input
-                    [(ngModel)]="createModel.taxDepartment"
-                    type="text"
-                    class="form-control"
-                    name="taxDepartment"
-                  />
+                  <label>Vergi Dairesi</label>
+                  <input [(ngModel)]="createModel.taxDepartment" type="text" class="form-control"
+                    name="taxDepartment" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label>Tax Number</label>
-                  <input
-                    [(ngModel)]="createModel.taxNumber"
-                    type="text"
-                    class="form-control"
-                    name="taxNumber"
-                  />
+                  <label>Vergi Numarası</label>
+                  <input [(ngModel)]="createModel.taxNumber" type="text" class="form-control" name="taxNumber" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
@@ -156,44 +109,29 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label>City</label>
-                  <input
-                    [(ngModel)]="createModel.city"
-                    type="text"
-                    class="form-control"
-                    name="city"
-                  />
+                  <label>İl</label>
+                  <input [(ngModel)]="createModel.city" type="text" class="form-control" name="city" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label>Town</label>
-                  <input
-                    [(ngModel)]="createModel.town"
-                    type="text"
-                    class="form-control"
-                    name="town"
-                  />
+                  <label>İlçe</label>
+                  <input [(ngModel)]="createModel.town" type="text" class="form-control" name="town" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label>Full Address</label>
-            <textarea
-              [(ngModel)]="createModel.fullAddress"
-              type="text"
-              class="form-control"
-              name="fullAddress"
-              rows="5"
-            ></textarea>
+            <label>Adres</label>
+            <textarea [(ngModel)]="createModel.fullAddress" type="text" class="form-control" name="fullAddress"
+              rows="5"></textarea>
             <div class="invalid-feedback"></div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-dark w-100">Create</button>
+          <button type="submit" class="btn btn-dark w-100">Kaydet</button>
         </div>
       </form>
     </div>
@@ -201,53 +139,26 @@
 </div>
 
 <!-- Update Modal -->
-<div
-  class="modal fade"
-  id="updateModal"
-  aria-hidden="true"
-  aria-labelledby="updateModalLabel"
-  tabindex="-1"
->
+<div class="modal fade" id="updateModal" aria-hidden="true" aria-labelledby="updateModalLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="updateModalLabel">
-          Cash Register Update Form
+          Cari Güncelleme Formu
         </h5>
-        <button
-          type="button"
-          #updateModalCloseBtn
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
-      <form
-        #updateForm="ngForm"
-        (ngSubmit)="update(updateForm)"
-        autocomplete="off"
-      >
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
-            <label>Current Name</label>
-            <input
-              [(ngModel)]="updateModel.name"
-              type="text"
-              class="form-control"
-              name="name"
-              required
-            />
+            <label>Cari Adı</label>
+            <input [(ngModel)]="updateModel.name" type="text" class="form-control" name="name" required />
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group">
-            <label>Type</label>
-            <select
-              [(ngModel)]="updateModel.typeValue"
-              class="form-control"
-              name="typeValue"
-              required
-            >
+            <label>Tip</label>
+            <select [(ngModel)]="updateModel.typeValue" class="form-control" name="typeValue" required>
               @for (type of customerTypes; track type) {
               <option [value]="type.value">{{ type.name }}</option>
               }
@@ -258,25 +169,16 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label>Tax Department</label>
-                  <input
-                    [(ngModel)]="updateModel.taxDepartment"
-                    type="text"
-                    class="form-control"
-                    name="taxDepartment"
-                  />
+                  <label>Vergi Dairesi</label>
+                  <input [(ngModel)]="updateModel.taxDepartment" type="text" class="form-control"
+                    name="taxDepartment" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label>Tax Number</label>
-                  <input
-                    [(ngModel)]="updateModel.taxNumber"
-                    type="text"
-                    class="form-control"
-                    name="taxNumber"
-                  />
+                  <label>Vergi Numarası</label>
+                  <input [(ngModel)]="updateModel.taxNumber" type="text" class="form-control" name="taxNumber" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
@@ -286,44 +188,29 @@
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label>City</label>
-                  <input
-                    [(ngModel)]="updateModel.city"
-                    type="text"
-                    class="form-control"
-                    name="city"
-                  />
+                  <label>İl</label>
+                  <input [(ngModel)]="updateModel.city" type="text" class="form-control" name="city" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label>Town</label>
-                  <input
-                    [(ngModel)]="updateModel.town"
-                    type="text"
-                    class="form-control"
-                    name="town"
-                  />
+                  <label>İlçe</label>
+                  <input [(ngModel)]="updateModel.town" type="text" class="form-control" name="town" />
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label>Full Address</label>
-            <textarea
-              [(ngModel)]="updateModel.fullAddress"
-              type="text"
-              class="form-control"
-              name="fullAddress"
-              rows="5"
-            ></textarea>
+            <label>Adres</label>
+            <textarea [(ngModel)]="updateModel.fullAddress" type="text" class="form-control" name="fullAddress"
+              rows="5"></textarea>
             <div class="invalid-feedback"></div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-dark w-100">Update</button>
+          <button type="submit" class="btn btn-dark w-100">Güncelle</button>
         </div>
       </form>
     </div>

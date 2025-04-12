@@ -1,17 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { CustomerPipe } from '../../../../pipes/customer.pipe';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
 import { CustomerModel, CustomerTypes } from '../../../../models/customers/customer.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { CUSTOMERS_ENDPOINT } from '../../../../constants/url-constants';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-customers',
-  imports: [CommonModule, FormsModule,RouterLink, CustomerPipe, SectionDescriptionComponent],
+  imports: [SharedModule, CustomerPipe],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })
@@ -21,6 +19,7 @@ export class CustomersComponent {
   createModel: CustomerModel = new CustomerModel();
   updateModel: CustomerModel = new CustomerModel();
   search: string = '';
+  p: number = 1;
 
   @ViewChild('createModalCloseBtn') createModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;
   @ViewChild('updateModalCloseBtn') updateModalCloseBtn:| ElementRef<HTMLButtonElement>| undefined;

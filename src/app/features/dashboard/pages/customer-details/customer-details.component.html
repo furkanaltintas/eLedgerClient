@@ -1,17 +1,17 @@
-<app-section-description title="{{customer.name}} Current Movements" [buttonStatus]="false"></app-section-description>
+<app-section-description title="{{customer.name}} Cari Hareketleri" [buttonStatus]="false"></app-section-description>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin...">
 
 <table class="table">
   <thead class="table-dark">
-      <tr>
-          <th>#</th>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Inflow</th>
-          <th>Outflow</th>
-      </tr>
+    <tr>
+      <th>#</th>
+      <th>Tarih</th>
+      <th>Tip</th>
+      <th>Açıklama</th>
+      <th>Giriş</th>
+      <th>Çıkış</th>
+  </tr>
   </thead>
   <tbody>
       @for (detail of customer.details | customerDetail:search; track detail) {
