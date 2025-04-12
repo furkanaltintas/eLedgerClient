@@ -1,6 +1,6 @@
 <div class="search container">
   <form>
-      <input class="form-control" type="text" placeholder="Type here..." aria-label="Search">
+      <input [(ngModel)]="search" name="search" (keydown.enter)="onSearch()" class="form-control" type="text" placeholder="Sayfa ismi girdikten sonra enter tuşuna basınız..." aria-label="Search">
   </form>
   <a href="#" class="toggle-search"><i class="material-icons">close</i></a>
 </div>
