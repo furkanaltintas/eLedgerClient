@@ -3,11 +3,8 @@ import { UserPipe } from '../../../../pipes/user.pipe';
 import { UserModel } from '../../../../models/users/user.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
-import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { CompanyModel } from '../../../../models/companies/company.model';
 import { CompanyUserModel } from '../../../../models/companies/company-user.model';
-import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
 import {
   AUTH_CHANGE_COMPANY,
   COMPANIES_ENDPOINT,
@@ -18,18 +15,13 @@ import { AdminStatusPipe } from '../../../../pipes/admin-status.pipe';
 import { AdminStatusClassPipe } from '../../../../pipes/admin-status-class.pipe';
 import { LoginResponse } from '../../../../core/auth/models/auth.model';
 import { AuthService } from '../../../../core/auth/services/auth.service';
+import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    UserPipe,
-    AdminStatusPipe,
-    AdminStatusClassPipe,
-    SectionDescriptionComponent,
-  ],
+  imports: [SharedModule, UserPipe, AdminStatusPipe, AdminStatusClassPipe],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -39,13 +31,10 @@ export class UsersComponent {
   companies: CompanyModel[] = [];
   users: UserModel[] = [];
   search: string = '';
+  p: number = 1;
 
-  @ViewChild('createModalCloseBtn') createModalCloseBtn:
-    | ElementRef<HTMLButtonElement>
-    | undefined;
-  @ViewChild('updateModalCloseBtn') updateModalCloseBtn:
-    | ElementRef<HTMLButtonElement>
-    | undefined;
+  @ViewChild('createModalCloseBtn') createModalCloseBtn: | ElementRef<HTMLButtonElement> | undefined;
+  @ViewChild('updateModalCloseBtn') updateModalCloseBtn: | ElementRef<HTMLButtonElement> | undefined;
 
   constructor(
     private http: HttpService,
@@ -80,18 +69,18 @@ export class UsersComponent {
   create(form: NgForm) {
     if (!form.valid) return;
 
-      this.http.post<string>(USERS_ENDPOINT, this.createModel, (res) => {
-        const message = res.value!;
-        if(!res.isSuccess) return;
+    this.http.post<string>(USERS_ENDPOINT, this.createModel, (res) => {
+      const message = res.value!;
+      if (!res.isSuccess) return;
 
-        this.swal.callToast(message);
-        this.createModel = new UserModel();
-        this.createModalCloseBtn?.nativeElement.click();
+      this.swal.callToast(message);
+      this.createModel = new UserModel();
+      this.createModalCloseBtn?.nativeElement.click();
 
-        debugger;
-        this.refreshCompanies();
-      });
-    }
+      debugger;
+      this.refreshCompanies();
+    });
+  }
 
   update(form: NgForm) {
     if (form.valid) {

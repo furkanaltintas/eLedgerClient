@@ -1,6 +1,6 @@
-<app-section-description title="Users"></app-section-description>
+<app-section-description title="Kullanıcılar"></app-section-description>
 
-<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Search...">
+<input [(ngModel)]="search" type="search" class="form-control fc-search search-input" placeholder="Aranacak değer girin...">
 
 <table class="table">
   <thead class="table-dark">
@@ -28,22 +28,22 @@
             </span>
           </th>
           <th>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(user)">Update</button>
-            <button (click)="delete(user)" class="btn btn-danger btn-sm">Delete</button>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="get(user)">Güncelle</button>
+            <button (click)="delete(user)" class="btn btn-danger btn-sm">Sil</button>
           </th>
       </tr>
       }
   </tbody>
 </table>
 
-
+<app-pagination (pageChange)="p = $event"></app-pagination>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" aria-hidden="true" aria-labelledby="createModalLabel"  tabindex="-1">
   <div class="modal-dialog  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">User Create Form</h5>
+        <h5 class="modal-title" id="createModalLabel">Kullanıcı Ekleme Formu</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
@@ -75,7 +75,7 @@
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Companies</label>
+          <label>Bağlı Olduğu Şirketler</label>
           <select [(ngModel)]="createModel.companyIds" name="companyIds" class="form-control" multiple required>
             @for (company of companies; track company) {
               <option [value]="company.id">{{company.name}}</option>
@@ -84,7 +84,7 @@
         </div>
         <div class="form-check">
           <input [(ngModel)]="createModel.isAdmin" type="checkbox" class="form-check-input" name="isAdmin">
-          <label class="form-check-label">Are you an admin?</label>
+          <label class="form-check-label">Admin Mi?</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -101,7 +101,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">User Update Form</h5>
+        <h5 class="modal-title" id="updateModalLabel">Kullanıcı Güncelleme Formu</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
@@ -133,7 +133,7 @@
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-          <label>Companies</label>
+          <label>Bağlı Olduğu Şirketler</label>
           <select [(ngModel)]="updateModel.companyIds" name="companyIds" class="form-control" multiple required>
             @for (company of companies; track company) {
               <option [value]="company.id">{{company.name}}</option>
@@ -142,7 +142,7 @@
         </div>
         <div class="form-check">
           <input [(ngModel)]="updateModel.isAdmin" type="checkbox" class="form-check-input" name="isAdmin">
-          <label class="form-check-label">Are you an admin?</label>
+          <label class="form-check-label">Admin Mi?</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
