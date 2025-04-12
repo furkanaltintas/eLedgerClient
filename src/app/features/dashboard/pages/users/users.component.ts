@@ -7,31 +7,50 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CompanyModel } from '../../../../models/companies/company.model';
 import { CompanyUserModel } from '../../../../models/companies/company-user.model';
-import { SectionDescriptionComponent } from "../../../../layout/section-description/section-description.component";
-import { COMPANIES_ENDPOINT, USERS_ENDPOINT } from '../../../../constants/url-constants';
+import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
+import {
+  AUTH_CHANGE_COMPANY,
+  COMPANIES_ENDPOINT,
+  TOKEN_KEY,
+  USERS_ENDPOINT,
+} from '../../../../constants/url-constants';
 import { AdminStatusPipe } from '../../../../pipes/admin-status.pipe';
 import { AdminStatusClassPipe } from '../../../../pipes/admin-status-class.pipe';
+import { LoginResponse } from '../../../../core/auth/models/auth.model';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, UserPipe,AdminStatusPipe,AdminStatusClassPipe, SectionDescriptionComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    UserPipe,
+    AdminStatusPipe,
+    AdminStatusClassPipe,
+    SectionDescriptionComponent,
+  ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
 })
 export class UsersComponent {
-  createModel:UserModel = new UserModel();
-  updateModel:UserModel = new UserModel();
+  createModel: UserModel = new UserModel();
+  updateModel: UserModel = new UserModel();
   companies: CompanyModel[] = [];
-  users : UserModel[] = [];
-  search: string = "";
+  users: UserModel[] = [];
+  search: string = '';
 
-  @ViewChild("createModalCloseBtn") createModalCloseBtn: ElementRef<HTMLButtonElement> | undefined;
-  @ViewChild("updateModalCloseBtn") updateModalCloseBtn: ElementRef<HTMLButtonElement> | undefined;
+  @ViewChild('createModalCloseBtn') createModalCloseBtn:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
+  @ViewChild('updateModalCloseBtn') updateModalCloseBtn:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
 
   constructor(
     private http: HttpService,
-    private swal: SwalService
+    private swal: SwalService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -42,56 +61,86 @@ export class UsersComponent {
   private loadUsers() {
     this.http.get<UserModel[]>(USERS_ENDPOINT, (res) => {
       this.users = res.value!;
-    })
+    });
   }
 
   private loadCompanies() {
     this.http.get<CompanyModel[]>(COMPANIES_ENDPOINT, (res) => {
       this.companies = res.value!;
-    })
+    });
   }
 
   get(model: UserModel) {
-    this.updateModel = {...model};
-    this.updateModel.companyIds = this.updateModel.companyUsers.map(value => value.companyId);
+    this.updateModel = { ...model };
+    this.updateModel.companyIds = this.updateModel.companyUsers.map(
+      (value) => value.companyId
+    );
   }
 
   create(form: NgForm) {
-    if(form.valid) {
+    if (!form.valid) return;
+
       this.http.post<string>(USERS_ENDPOINT, this.createModel, (res) => {
-        this.swal.callToast(res.value!);
+        const message = res.value!;
+        if(!res.isSuccess) return;
+
+        this.swal.callToast(message);
         this.createModel = new UserModel();
         this.createModalCloseBtn?.nativeElement.click();
-        this.loadUsers();
-      })
+
+        debugger;
+        this.refreshCompanies();
+      });
     }
-  }
 
   update(form: NgForm) {
-    if(form.valid) {
-      if(this.updateModel.password === "") this.updateModel.password = null;
+    if (form.valid) {
+      if (this.updateModel.password === '') this.updateModel.password = null;
 
       this.http.put<string>(USERS_ENDPOINT, this.updateModel, (res) => {
         this.swal.callToast(res.value!);
         this.updateModel = new UserModel();
         this.updateModalCloseBtn?.nativeElement.click();
-        this.loadUsers();
-      })
+        this.refreshCompanies();
+      });
     }
   }
 
   delete(model: UserModel) {
-    this.swal.deleteToast("Kullanıcıyı Sil ?", `${model.fullName} kullanıcısını silmek istiyor musunuz ?`, () => {
-      this.http.delete<string>(USERS_ENDPOINT, {id:model.id}, (res) => {
-        this.swal.callToast(res.value!, "info");
-        this.loadUsers();
-      })
-    })
+    this.swal.deleteToast(
+      'Kullanıcıyı Sil ?',
+      `${model.fullName} kullanıcısını silmek istiyor musunuz ?`,
+      () => {
+        this.http.delete<string>(USERS_ENDPOINT, { id: model.id }, (res) => {
+          this.swal.callToast(res.value!, 'info');
+          this.loadUsers();
+        });
+      }
+    );
   }
 
-
   showServers(companyUsers: CompanyUserModel[]) {
-    const serverNames = companyUsers.map(companyUser => companyUser.company.name).join(', ');
-    this.swal.callToast(`Serverlar:\n ${serverNames}`, "info");
+    const serverNames = companyUsers
+      .map((companyUser) => companyUser.company.name)
+      .join(', ');
+    this.swal.callToast(`Serverlar:\n ${serverNames}`, 'info');
+  }
+
+  refreshCompanies() {
+    this.http.post<LoginResponse>(
+      AUTH_CHANGE_COMPANY,
+      { companyId: this.auth.user.companyId },
+      (res) => {
+        setTimeout(() => {
+          const token = res.value!.token;
+          localStorage.setItem(TOKEN_KEY, token);
+          this.loadUsers();
+          document.location.reload(); // Sayfayı otomatik olarak refresh işlemi yapıyor.
+        }, 1000);
+      },
+      () => {
+        this.loadUsers();
+      }
+    );
   }
 }

@@ -9,8 +9,8 @@
           <th>FullName</th>
           <th>UserName</th>
           <th>Email</th>
-          <td>Company</td>
-          <td>Is Admin</td>
+          <th>Company</th>
+          <th>Is Admin</th>
           <th>Actions</th>
       </tr>
   </thead>
@@ -45,7 +45,6 @@
       <div class="modal-header">
         <h5 class="modal-title" id="createModalLabel">User Create Form</h5>
         <button type="button" #createModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form #createForm="ngForm" (ngSubmit)="create(createForm)" autocomplete="off">
@@ -104,7 +103,6 @@
       <div class="modal-header">
         <h5 class="modal-title" id="updateModalLabel">User Update Form</h5>
         <button type="button" #updateModalCloseBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
