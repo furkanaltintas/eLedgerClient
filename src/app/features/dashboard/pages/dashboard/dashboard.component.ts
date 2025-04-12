@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SectionDescriptionComponent } from "../../../../layout/section-description/section-description.component";
+import { SectionDescriptionComponent } from '../../../../layout/section-description/section-description.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,5 +8,5 @@ import { SectionDescriptionComponent } from "../../../../layout/section-descript
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-
+  p: number = 1;
 }
