@@ -11,7 +11,8 @@ export class InvoicePipe implements PipeTransform {
 
     return value.filter(c =>
       c.customer.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-      c.invoiceNumber.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      c.invoiceNumber.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+      c.type.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
   }
 }
