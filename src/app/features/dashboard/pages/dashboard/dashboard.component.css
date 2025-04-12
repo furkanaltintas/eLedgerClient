@@ -1,0 +1,4 @@
+.table-hover>tbody>tr:hover {
+  --bs-table-hover-bg: #682020;
+  background: #682020;
+}
