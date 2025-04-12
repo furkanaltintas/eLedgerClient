@@ -20,9 +20,7 @@ export class HeaderComponent {
   constructor(
     public auth: AuthService,
     private http: HttpService,
-    private router: Router,
     private swal: SwalService) {
-    console.log(auth.user);
     this.name();
   }
 

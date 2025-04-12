@@ -3,7 +3,7 @@
       <div class="container-fluid">
           <div class="navbar-nav" id="navbarNav">
               <div class="logo">
-                  <a routerLink="/" [title]="companyName">Neptune | {{companyName}}</a>
+                  <a routerLink="/" [title]="companyName">e-Muhasebe | {{companyName}}</a>
               </div>
               <ul class="navbar-nav">
                   <li class="nav-item">
@@ -31,23 +31,19 @@
                       <a class="nav-link toggle-search"><i class="material-icons">search</i></a>
                   </li>
                   <li class="nav-item hidden-on-mobile">
-                      <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" data-bs-toggle="dropdown">4</a>
+                      <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" data-bs-toggle="dropdown">{{auth.user.fullName}}</a>
                       <div class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="notificationsDropDown">
-                          <h6 class="dropdown-header">Notifications</h6>
+                          <h6 class="dropdown-header">Şirketler</h6>
                           <div class="notifications-dropdown-list">
-                              <a>
-                                  <div class="notifications-dropdown-item">
-                                      <div class="notifications-dropdown-item-image">
-                                          <span class="notifications-badge bg-info text-white">
-                                              <i class="material-icons-outlined">campaign</i>
-                                          </span>
-                                      </div>
-                                      <div class="notifications-dropdown-item-text">
-                                          <p class="bold-notifications-text">Donec tempus nisi sed erat vestibulum, eu suscipit ex laoreet</p>
-                                          <small>19:00</small>
-                                      </div>
-                                  </div>
-                              </a>
+                            @for (company of auth.user.companies; track company) {
+                              <a (click)="changeCompany(company.Id)">
+                                <div class="notifications-dropdown-item">
+                                    <div class="notifications-dropdown-item-text">
+                                        <p class="bold-notifications-text" [className]="(companyName==company.Name ? 'text-success' : 'text-danger')">{{company.Name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            }
                           </div>
                       </div>
                   </li>
