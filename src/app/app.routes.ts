@@ -19,6 +19,7 @@ import { CustomerDetailsComponent } from './features/dashboard/pages/customer-de
 import { ProductsComponent } from './features/dashboard/pages/products/products.component';
 import { ProductDetailsComponent } from './features/dashboard/pages/product-details/product-details.component';
 import { InvoicesComponent } from './features/dashboard/pages/invoices/invoices.component';
+import { ProductProfitabilityReportsComponent } from './features/dashboard/pages/product-profitability-reports/product-profitability-reports.component';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -98,6 +99,16 @@ export const routes: Routes = [
         {
           path: "details/:id",
           component: ProductDetailsComponent
+        }
+      ]
+    },
+    {
+      path: 'reports',
+      canActivate: [roleGuard],
+      children: [
+        {
+          path: "product-profitability-reports",
+          component: ProductProfitabilityReportsComponent
         }
       ]
     }
