@@ -6,7 +6,6 @@ export const companyGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  debugger;
   if (!auth.isTokenValid()) {
     router.navigateByUrl("/login");
     return false;
