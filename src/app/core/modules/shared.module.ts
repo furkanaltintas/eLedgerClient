@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { SectionDescriptionComponent } from '../../../layout/section-description/section-description.component';
+import { SectionDescriptionComponent } from '../../layout/section-description/section-description.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PaginationComponent } from '../../../features/dashboard/paginations/pagination/pagination.component';
+import { PaginationComponent } from '../../features/dashboard/paginations/pagination/pagination.component';
 
 
 

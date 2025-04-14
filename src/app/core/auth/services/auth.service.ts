@@ -97,7 +97,6 @@ export class AuthService {
     this.user.isAdmin = decoded["IsAdmin"] === "True";
     this.user.companies = JSON.parse(decoded["Companies"]);
     this.user.companyId = decoded["CompanyId"];
-    debugger;
   }
 
   isTokenValid(): boolean {
