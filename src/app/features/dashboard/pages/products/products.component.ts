@@ -5,7 +5,7 @@ import { SwalService } from '../../../../core/swal/swal.service';
 import { HttpService } from '../../../../core/api/http.service';
 import { PRODUCTS_ENDPOINT } from '../../../../constants/url-constants';
 import { NgForm } from '@angular/forms';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 
 @Component({
   selector: 'app-products',

@@ -10,7 +10,7 @@ import { CashRegisterDetailModel } from '../../../../models/cash-register-detail
 import { ActivatedRoute } from '@angular/router';
 import { BankModel } from '../../../../models/banks/bank.model';
 import { CustomerModel } from '../../../../models/customers/customer.model';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 
 @Component({
   selector: 'app-cash-register-details',

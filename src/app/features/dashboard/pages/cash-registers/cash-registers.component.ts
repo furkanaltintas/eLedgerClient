@@ -9,7 +9,7 @@ import {
   CASH_REGISTER_DELETE_CONFIRMATION_TITLE,
 } from '../../../../constants/message-constants';
 import { CurrencyTypes } from '../../../../models/cash-registers/currency-type.model';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 import { NgForm } from '@angular/forms';
 
 @Component({

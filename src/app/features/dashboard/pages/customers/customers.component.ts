@@ -4,7 +4,7 @@ import { CustomerModel, CustomerTypes } from '../../../../models/customers/custo
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { CUSTOMERS_ENDPOINT } from '../../../../constants/url-constants';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 import { NgForm } from '@angular/forms';
 
 @Component({

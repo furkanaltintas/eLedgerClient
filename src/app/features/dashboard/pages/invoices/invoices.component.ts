@@ -7,7 +7,7 @@ import { CUSTOMERS_ENDPOINT, INVOICES_ENDPOINT, PRODUCTS_ENDPOINT } from '../../
 import { CustomerModel } from '../../../../models/customers/customer.model';
 import { ProductModel } from '../../../../models/products/product.model';
 import { InvoiceDetailModel } from '../../../../models/invoice-details/invoice-detail.model';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 

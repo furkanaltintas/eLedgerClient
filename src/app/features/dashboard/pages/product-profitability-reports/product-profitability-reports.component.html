@@ -1,0 +1,26 @@
+<app-section-description title="Stok Karlık Raporu"></app-section-description>
+
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Ürün Adı</th>
+      <th>Alış Birim Fiyatı</th>
+      <th>Satış Birim Fiyatı</th>
+      <th>Karlılık Yüzde</th>
+      <th>Karlılık</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (d of data; track d) {
+      <tr>
+        <td>{{ $index + 1 }}</td>
+        <td>{{ d.name }}</td>
+        <td>{{ d.depositPrice | currency: '₺': true }}</td>
+        <td>{{ d.withdrawalPrice | currency: '₺':true }}</td>
+        <td [ngClass]="d.profitPercent > 0 ? 'text-success':'text-danger'">{{ d.profitPercent | currency: '%':true }}</td>
+        <td [ngClass]="d.profit > 0 ? 'text-success':'text-danger'">{{ d.profit | currency: '₺':true }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

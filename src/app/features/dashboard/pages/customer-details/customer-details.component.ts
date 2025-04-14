@@ -4,7 +4,7 @@ import { CustomerModel } from '../../../../models/customers/customer.model';
 import { HttpService } from '../../../../core/api/http.service';
 import { ActivatedRoute } from '@angular/router';
 import { CUSTOMER_DETAILS_ENDPOINT } from '../../../../constants/url-constants';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 
 @Component({
   selector: 'app-customer-details',

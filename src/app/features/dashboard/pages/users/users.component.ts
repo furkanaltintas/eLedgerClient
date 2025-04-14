@@ -15,7 +15,7 @@ import { AdminStatusPipe } from '../../../../pipes/admin-status.pipe';
 import { AdminStatusClassPipe } from '../../../../pipes/admin-status-class.pipe';
 import { LoginResponse } from '../../../../core/auth/models/auth.model';
 import { AuthService } from '../../../../core/auth/services/auth.service';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 import { NgForm } from '@angular/forms';
 
 @Component({

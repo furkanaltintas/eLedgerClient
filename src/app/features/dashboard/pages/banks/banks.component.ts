@@ -6,7 +6,7 @@ import { CurrencyTypes } from '../../../../models/cash-registers/currency-type.m
 import { HttpService } from '../../../../core/api/http.service';
 import { SwalService } from '../../../../core/swal/swal.service';
 import { BANKS_ENDPOINT } from '../../../../constants/url-constants';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 
 @Component({
   selector: 'app-banks',

@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 import { CompanyPipe } from '../../../../pipes/company.pipe';
 import {  COMPANIES_ENDPOINT, COMPANIES_MIGRATEALL_ENDPOINT } from '../../../../constants/url-constants';
 import { DATABASE_DELETE_CONFIRMATION_MESSAGE, DATABASE_DELETE_CONFIRMATION_TITLE, DATABASE_UPDATE_CONFIRMATION_MESSAGE, DATABASE_UPDATE_CONFIRMATION_TITLE } from '../../../../constants/message-constants';
-import { SharedModule } from '../../../../core/modules/shared/shared.module';
+import { SharedModule } from '../../../../core/modules/shared.module';
 
 @Component({
   selector: 'app-companies',
