@@ -52,6 +52,19 @@ export class MenuComponent {
       title: "Faturalar",
       url: "/invoices",
       showThisMenuJustAdmin: true
+    },
+    {
+      title: "Raporlar",
+      url: "",
+      noUrl: true,
+      showThisMenuJustAdmin: true,
+      subMenus: [
+        {
+          title: "Stok Karlık Raporu",
+          url:"/reports/product-profitability-reports",
+          showThisMenuJustAdmin: true
+        }
+      ]
     }
   ];
 
